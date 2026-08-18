@@ -3,35 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Brief Archive</title>
+<title>Daily Brief — Archive</title>
 <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-title" content="Brief">
 <link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
 <style>
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  :root{--navy:#0a1628;--navy-mid:#0f1e35;--border:#1a2a44;--gold:#c9a84c;--text:#e8e8e8;--text2:#b0c4de;--muted:#4a6080}
-  html{background:var(--navy)}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--text);max-width:760px;margin:0 auto;
-       padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 50px)}
-  h1{color:var(--gold);font-size:22px;margin-bottom:4px}
-  .sub{color:var(--muted);font-size:12px;margin-bottom:22px}
-  a.item{display:block;background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:9px;
-         color:var(--text);text-decoration:none;font-size:14.5px}
-  a.item span{display:block;color:var(--muted);font-size:11.5px;margin-top:3px}
-  .navlink{display:inline-block;margin-top:16px;font-size:12px;color:var(--text2);text-decoration:none;border:1px solid var(--border);border-radius:20px;padding:7px 16px}
-  .empty{color:var(--muted);font-size:13px;padding:20px 0}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--navy:#0a1628;--navy-mid:#0f1e35;--navy-dark:#08101e;--border:#1a2a44;--gold:#c9a84c;--gold-light:#e8d08a;--text:#e8e8e8;--text2:#b0c4de;--muted:#4a6080}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--text);max-width:780px;margin:0 auto;padding:32px 20px 60px}
+  .head{border-bottom:1px solid var(--border);padding-bottom:20px;margin-bottom:24px}
+  .head h1{color:var(--gold);font-size:26px;letter-spacing:.5px}
+  .head .sub{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-top:6px}
+  .item{display:block;background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;padding:16px 20px;margin-bottom:10px;color:var(--text);text-decoration:none}
+  .item:hover{border-color:var(--gold)}
+  .item span{display:block;color:var(--text2);font-size:12.5px;margin-top:4px}
+  .back{margin-top:24px;display:inline-block}
+  .back a{color:var(--gold);text-decoration:none;font-size:13px}
+  .back a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<h1>Past Briefs</h1>
-<div class="sub">Everything you've been served, newest first</div>
+
+<div class="head">
+  <h1>Daily Brief — Archive</h1>
+  <div class="sub">Past editions</div>
+</div>
 
 <!-- ARCHIVE_LIST_START -->
-<a class="item" href="archive/2026-08-12.html">Wednesday, 12 August 2026<span>Pricing risk and staying rational</span></a>
+<a class="item" href="archive/2026-08-17.html">Monday, 17 August 2026<span>Positioning for the week ahead</span></a>
+<a class="item" href="archive/2026-08-14.html">Friday, 14 August 2026<span>Reading past the headline number</span></a>
+<a class="item" href="archive/2026-08-13.html">Thursday, 13 August 2026<span>Reading the real number instead of the headline</span></a>
 <!-- ARCHIVE_LIST_END -->
 
-<a class="navlink" href="index.html">← Today's brief</a>
+<div class="back"><a href="index.html">← Back to today's brief</a></div>
+
 </body>
 </html>

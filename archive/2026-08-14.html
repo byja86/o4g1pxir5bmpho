@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief — 14 Aug 2026</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{--navy:#0a1628;--navy-mid:#0f1e35;--navy-dark:#08101e;--border:#1a2a44;--gold:#c9a84c;--gold-light:#e8d08a;--text:#e8e8e8;--text2:#b0c4de;--muted:#4a6080;--teal:#1D9E75;--blue:#378ADD}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--text);max-width:780px;margin:0 auto;padding:32px 20px 60px}
+  .head{border-bottom:1px solid var(--border);padding-bottom:20px;margin-bottom:24px}
+  .head h1{color:var(--gold);font-size:26px;letter-spacing:.5px}
+  .head .date{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  .head .theme{color:var(--text2);font-size:14px;margin-top:10px;line-height:1.5}
+  .card{background:var(--navy-mid);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+  .tag{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--navy-dark);border:1px solid var(--gold)}
+  .card h2{font-size:17px;line-height:1.35;margin-bottom:6px}
+  .card h2 a{color:var(--text);text-decoration:none}
+  .card h2 a:hover{color:var(--gold-light)}
+  .meta{font-size:12px;color:var(--muted);margin-bottom:10px}
+  .why{font-size:13.5px;color:var(--text2);line-height:1.6}
+  .why b{color:var(--gold-light);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--border);padding-top:10px}
+  summary{font-size:11px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+  .cpd-entry{background:var(--navy-dark);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:10px;font-size:12.5px;color:var(--text2);line-height:1.7}
+  .cpd-entry b{color:var(--text);display:inline-block;min-width:150px}
+  .foot{margin-top:28px;border-top:1px solid var(--border);padding-top:18px;font-size:12.5px;color:var(--muted);line-height:1.7}
+  .foot .fb{color:var(--text2)}
+  .foot a{color:var(--gold);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+  .num{color:var(--gold);font-weight:700;margin-right:6px}
+
+  .fbrow{display:flex;gap:8px;margin-top:12px;border-top:1px solid var(--border);padding-top:11px;align-items:center;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:110px;background:transparent;border:1px solid var(--border);color:var(--text2);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn:active{transform:scale(.98)}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--navy-dark);border:1px solid var(--border);color:var(--text);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:66px;display:none;-webkit-appearance:none}
+  .cbox::placeholder{color:var(--muted)}
+  .cbox.show{display:block}
+  .sendbar{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:22px;border-top:1px solid var(--border)}
+  .sendbtn{width:100%;background:var(--gold);color:var(--navy-dark);border:none;border-radius:10px;padding:15px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .sendbtn:active{transform:scale(.99)}
+  .sendbtn.done{background:#1D9E75;color:#fff}
+  .sendnote{font-size:12px;color:var(--muted);text-align:center;margin-top:9px;line-height:1.5}
+  .mailalt{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--text2);text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date">Friday · 14 August 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b style="color:var(--gold-light)">Theme of the day:</b> Reading past the headline number — IFRS 18's fine print and Damodaran's country-risk math for the CFO toolkit, why two very different investors both bet on where everyone else already looked away, and why SA's wheat and rand headlines are calmer than they sound once you check the mechanism.</div>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-cfo">CFO Path</span><span class="tag t-cpd">★ CPD Eligible</span></div>
+  <h2><span class="num">1</span><a href="https://abmagazine.accaglobal.com/content/abmagazine/global/articles/2026/jul/technical/ifrs-18-questions-keep-coming.html">ACCA AB Magazine: IFRS 18 questions keep coming</a></h2>
+  <div class="meta">ACCA AB Magazine · Technical · July 2026 issue · ~8 min read</div>
+  <div class="why">IFRIC is still fielding implementation questions on IFRS 18 ahead of its January 2027 effective date — new mandatory income statement categories (operating, investing, financing) and management-defined performance measures that have to be reconciled and disclosed. <b>Get ahead of the categorisation logic now and you won't be scrambling when it lands on your desk as CFO.</b></div>
+  <details><summary>Ready-to-paste CPD entry</summary>
+    <div class="cpd-entry">
+      <b>Date:</b> 2026-08-14<br>
+      <b>Description:</b> Read ACCA AB Magazine technical article "IFRS 18 questions keep coming," covering IFRIC's ongoing implementation queries ahead of the January 2027 effective date<br>
+      <b>Provider:</b> ACCA (AB Magazine)<br>
+      <b>Units:</b> 0.5 (verifiable — complete the linked MCQ for a certificate)<br>
+      <b>Why chosen:</b> IFRS 18's new income statement structure is directly relevant to any P&amp;L Byron presents or reviews as FM/CFO<br>
+      <b>Learning &amp; application:</b> Mapping Red Badger's management reporting categories against the new mandatory subtotals ahead of the 2027 transition
+    </div>
+  </details>
+<div class="fbrow" data-n="1" data-t="ACCA AB Magazine: IFRS 18 questions keep coming"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-cfo">CFO Path</span><span class="tag t-cpd">★ CPD Eligible</span></div>
+  <h2><span class="num">2</span><a href="https://aswathdamodaran.blogspot.com/2026/07/country-risk-drivers-measures-and.html">Damodaran: Country Risk — Drivers, Measures and Investment Implications (2026 Edition)</a></h2>
+  <div class="meta">Musings on Markets · Aswath Damodaran · July 2026 · ~35 min read</div>
+  <div class="why">Damodaran's annual paper on how to actually quantify a country's risk premium — default spreads, CDS pricing, ratings — rather than eyeballing it. <b>It's the same rigour a CFO applies to cost of capital, and a genuinely useful lens for weighing SA's risk premium against the UK or Australia</b> as the relocation question sits in the background.</div>
+  <details><summary>Ready-to-paste CPD entry</summary>
+    <div class="cpd-entry">
+      <b>Date:</b> 2026-08-14<br>
+      <b>Description:</b> Reviewed Aswath Damodaran's 2026 Country Risk paper — drivers, measurement methods and investment implications of country risk premiums<br>
+      <b>Provider:</b> NYU Stern / Damodaran Online (Musings on Markets)<br>
+      <b>Units:</b> 0.75 (self-study — non-verifiable, retain notes as evidence)<br>
+      <b>Why chosen:</b> Builds the cost-of-capital framework needed to evaluate cross-border finance decisions<br>
+      <b>Learning &amp; application:</b> Applying country risk premium adjustments when benchmarking SA-based decisions against UK/Australia alternatives
+    </div>
+  </details>
+<div class="fbrow" data-n="2" data-t="Damodaran: Country Risk — Drivers, Measures and Investment Implications (2026 Edition)"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-pe">PE &amp; Deals</span></div>
+  <h2><span class="num">3</span><a href="https://colossus.com/episode/sandcastles-and-silicon/">Invest Like The Best: Sandcastles &amp; Silicon</a></h2>
+  <div class="meta">Invest Like The Best · Patrick O'Shaughnessy with Eric Vishria (Benchmark) · Ep. 486 · ~70 min listen</div>
+  <div class="why">Vishria unpacks the AWS earnings call he thinks most investors misread, and argues the CEOs clinging to old playbooks are the ones actually destroying equity value right now. The real thread running through it is the chemistry he needs before backing a founder — <b>the exact judgment call you'll be making from the other side of the table once you're running your own fund.</b></div>
+<div class="fbrow" data-n="3" data-t="Invest Like The Best: Sandcastles & Silicon"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-pe">PE &amp; Deals</span></div>
+  <h2><span class="num">4</span><a href="https://www.youtube.com/watch?v=UpuinNtK6c4">Founders: How Raymond Plank Made a Fortune in Big Oil's Scraps</a></h2>
+  <div class="meta">Founders Podcast · David Senra · 1 Aug · ~70 min listen</div>
+  <div class="why">Plank built Apache into a $50bn company starting from $250k, largely by working the deals and assets the majors had already rejected rather than competing head-on for the obvious ones. <b>A sharp reminder for a future fund founder: the best returns often sit exactly where everyone else already looked and walked away.</b></div>
+<div class="fbrow" data-n="4" data-t="Founders: How Raymond Plank Made a Fortune in Big Oil's Scraps"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-sa">SA Business</span></div>
+  <h2><span class="num">5</span><a href="https://www.businessday.co.za/opinion/2026-08-04-wandile-sihlobo-wheat-plantings-hit-lowest-level-since-1929/">Wandile Sihlobo: Wheat plantings hit lowest level since 1929</a></h2>
+  <div class="meta">Business Day · Wandile Sihlobo · 4 Aug · ~5 min read</div>
+  <div class="why">The headline sounds like a crisis, but Sihlobo's read is structural, not a failure: ample global wheat at lower prices plus higher input costs made planting more wheat simply uneconomical for SA farmers this season. <b>That's the difference between reacting to a scary number and actually understanding SA's agricultural economics.</b></div>
+<div class="fbrow" data-n="5" data-t="Wandile Sihlobo: Wheat plantings hit lowest level since 1929"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-sa">SA Business</span></div>
+  <h2><span class="num">6</span><a href="https://www.cnbcafrica.com/2026/south-african-rand-holds-near-5-month-peak-after-us-inflation-data">Rand holds near 5-month peak after US inflation data</a></h2>
+  <div class="meta">CNBC Africa · 12 Aug · ~4 min read</div>
+  <div class="why">The rand's strength has almost nothing to do with SA right now — it's softer US inflation cooling Fed rate-hike bets and lifting emerging-market currencies broadly. <b>Good discipline for reading any SA market move: separate what actually happened locally from what just happened to land in SA's favour.</b></div>
+<div class="fbrow" data-n="6" data-t="Rand holds near 5-month peak after US inflation data"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="card">
+  <div class="tags"><span class="tag t-life">Focus &amp; Wellbeing</span></div>
+  <h2><span class="num">7</span><a href="https://www.youtube.com/watch?v=r374bSsGlSM">Deep Questions: The Optimization Paradox (with Brad Stulberg)</a></h2>
+  <div class="meta">Deep Questions with Cal Newport · Cal Newport &amp; Brad Stulberg · ~45 min listen</div>
+  <div class="why">Their case: constant tracking — wearables, metrics, dashboards — can quietly create anxiety and crowd out the fundamentals that actually drive progress. <b>Worth sitting with if you're the type who tracks everything, training and work included</b> — sometimes the measurement becomes the point instead of the growth it's meant to serve.</div>
+<div class="fbrow" data-n="7" data-t="Deep Questions: The Optimization Paradox (with Brad Stulberg)"><button class="fbtn up" onclick="vote(this,1)">More like this</button><button class="fbtn dn" onclick="vote(this,-1)">Less like this</button><button class="cbtn" onclick="note(this)">Note</button></div><textarea class="cbox" placeholder="Anything specific? e.g. too long, wrong angle, want more on this topic"></textarea>
+</div>
+
+<div class="foot">
+  <div class="fb"><b style="color:var(--gold)">Feedback loop:</b> Tap <b>More</b> or <b>Less</b> on any item above, add a note if you want, then hit the gold button at the bottom.</div>
+  <div style="margin-top:8px"><b style="color:var(--gold)">CPD this week:</b> Items #1 and #2 = 1.25 units available today. Weekly target: 2.0 units. Log them in your Professional Development Tracker.</div>
+  <div style="margin-top:8px"><a href="archive.html">← Past briefs</a></div>
+</div>
+
+
+<div class="sendbar">
+  <button class="sendbtn" id="sendbtn" onclick="collect()">Copy my feedback</button>
+  <div class="sendnote" id="sendnote">Tap the buttons above, then copy and paste into Claude.</div>
+  <a class="mailalt" id="mailalt" href="#">Or email it to myself instead</a>
+</div>
+
+<script>
+var KEY = 'brief-fb-' + document.title;
+var S = {};
+try { S = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch(e) { S = {}; }
+
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+
+function vote(btn, v){
+  var row = btn.parentNode, n = row.getAttribute('data-n');
+  var up = row.querySelector('.up'), dn = row.querySelector('.dn');
+  if (!S[n]) S[n] = {};
+  S[n].v = (S[n].v === v) ? 0 : v;
+  up.className = 'fbtn up' + (S[n].v === 1 ? ' on-up' : '');
+  dn.className = 'fbtn dn' + (S[n].v === -1 ? ' on-dn' : '');
+  save();
+}
+
+function note(btn){
+  var row = btn.parentNode, box = row.nextElementSibling;
+  box.classList.toggle('show');
+  if (box.classList.contains('show')) box.focus();
+}
+
+function build(){
+  var rows = document.querySelectorAll('.fbrow'), lines = [], any = false;
+  for (var i = 0; i < rows.length; i++){
+    var n = rows[i].getAttribute('data-n'), t = rows[i].getAttribute('data-t');
+    var box = rows[i].nextElementSibling, c = box.value.trim();
+    var v = S[n] && S[n].v ? S[n].v : 0;
+    if (!v && !c) continue;
+    any = true;
+    var tag = v === 1 ? 'MORE like this' : (v === -1 ? 'LESS like this' : 'Comment');
+    lines.push('#' + n + ' ' + t + ' -> ' + tag + (c ? ' | Note: ' + c : ''));
+  }
+  if (!any) return null;
+  var d = document.querySelector('.head .date');
+  return 'Feedback on my brief (' + (d ? d.textContent.trim() : 'today') + '):\n\n'
+       + lines.join('\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+function collect(){
+  var txt = build(), b = document.getElementById('sendbtn'), note = document.getElementById('sendnote');
+  if (!txt){ note.textContent = 'Tap More or Less on at least one item first.'; return; }
+  function ok(){
+    b.textContent = 'Copied';
+    b.className = 'sendbtn done';
+    note.textContent = 'Now open Claude and paste it in. Takes 5 seconds.';
+    setTimeout(function(){ b.textContent = 'Copy my feedback'; b.className = 'sendbtn'; }, 4000);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(ok, function(){ fallback(txt, ok); });
+  } else { fallback(txt, ok); }
+}
+
+function fallback(txt, ok){
+  var ta = document.createElement('textarea');
+  ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); ok(); } catch(e){ prompt('Copy this:', txt); }
+  document.body.removeChild(ta);
+}
+
+document.getElementById('mailalt').addEventListener('click', function(e){
+  e.preventDefault();
+  var txt = build();
+  if (!txt){ document.getElementById('sendnote').textContent = 'Tap More or Less on at least one item first.'; return; }
+  window.location.href = 'mailto:byronadr01@gmail.com?subject=' + encodeURIComponent('Brief feedback') + '&body=' + encodeURIComponent(txt);
+});
+
+(function restore(){
+  var rows = document.querySelectorAll('.fbrow');
+  for (var i = 0; i < rows.length; i++){
+    var n = rows[i].getAttribute('data-n');
+    if (S[n] && S[n].v){
+      rows[i].querySelector('.up').className = 'fbtn up' + (S[n].v === 1 ? ' on-up' : '');
+      rows[i].querySelector('.dn').className = 'fbtn dn' + (S[n].v === -1 ? ' on-dn' : '');
+    }
+  }
+})();
+</script>
+
+</body>
+</html>
