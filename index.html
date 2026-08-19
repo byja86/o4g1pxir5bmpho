@@ -76,61 +76,59 @@
 <div id="items"></div>
 
 <div class="sendwrap">
-  <button class="send" id="send">Copy my feedback</button>
-  <div class="note" id="note">Tap More or Less, then copy and paste into Claude.</div>
-  <a class="mail" id="mail" href="#">Or email it to myself</a>
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
 </div>
 
 <div class="foot">
-  <b>CPD today:</b> items with the CPD badge carry a ready-made entry. Weekly target 2.0 units.
+  <b>CPD today:</b> item 2 carries a ready-made entry, 0.75 units. Weekly target 2.0 units.
   <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
 </div>
 
 <script>
 var ITEMS = [
- {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:true,
-  t:'Deloitte: CFOs face an expanded mandate in a volatile 2026',
-  u:'https://www.cfodive.com/news/cfos-face-expanded-mandate-pressures-volatile-2026-deloitte-ai/816558/',
-  m:'CFO Dive on Deloitte research - ~7 min read',
-  w:'The number worth remembering: only 21% of organisations that fully deployed AI say it has delivered tangible value, and just 14% have embedded agents in finance. Yet 54% of CFOs call it a top priority for the year. <b>That gap between intent and result is where a credible CFO earns trust</b>, by being the one in the room who can say what is actually working.',
-  c:'<b>Date:</b> 2026-08-18<br><b>Description:</b> Reviewed Deloitte CFO research on the expanded CFO mandate for 2026, covering AI adoption rates, realised value and transformation priorities<br><b>Provider:</b> Deloitte / CFO Dive<br><b>Units:</b> 0.5, self-study, retain notes as evidence<br><b>Why chosen:</b> Develops strategic and technology judgment required at CFO level<br><b>Learning &amp; application:</b> Framing realistic AI expectations in finance transformation discussions at Red Badger'},
+ {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'AI is showing a revenue payoff, Carnegie Mellon finds',
+  u:'https://www.cfodive.com/news/ai-showing-revenue-payoff-carnegiemellon-stock/828104/',
+  m:'CFO Dive - Alexei Alexis - ~4 min read',
+  w:'Companies with specific, quantified AI disclosures in their 10-Ks grew revenue 8 points faster than vague ones, but margins did not follow the same pattern. Visa\'s detailed reporting on AI-powered chats paid off; Conagra\'s vaguer version saw revenue fall. <b>Specificity beats hype, and that is the exact standard to hold any transformation initiative to once you are the one signing off on it.</b>'},
 
  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:true,
-  t:'Forbes: why finance transformation topped the CFO agenda in 2026',
-  u:'https://www.forbes.com/sites/anders-liu-lindberg/2026/07/09/why-finance-transformation-topped-the-cfo-agenda-in-2026/',
-  m:'Forbes - Anders Liu-Lindberg - ~8 min read',
-  w:'Liu-Lindberg is one of the sharper voices on business partnering, and his argument is that transformation topped the agenda because the old finance operating model stopped scaling, not because of the technology. <b>Useful if you want language for pitching change rather than just executing it</b>, which is the shift from Finance Manager to CFO in one sentence.',
-  c:'<b>Date:</b> 2026-08-18<br><b>Description:</b> Studied Forbes analysis on drivers of finance transformation and the changing finance operating model<br><b>Provider:</b> Forbes / Anders Liu-Lindberg<br><b>Units:</b> 0.5, self-study, retain notes as evidence<br><b>Why chosen:</b> Builds capability in leading change and business partnering<br><b>Learning &amp; application:</b> Structuring the case for process change in a consulting finance environment'},
+  t:'EY ties record audit-quality turnaround to a $1bn tech and talent bet',
+  u:'https://www.cfodive.com/news/ey-ties-audit-turnaround-tech-process-changes/828100/',
+  m:'CFO Dive - Alexei Alexis - ~5 min read',
+  w:'EY\'s PCAOB deficiency rate fell from 28% to 5% in a year, the biggest improvement of the Big Four, credited to a multiyear investment in technology, standardised audit processes and early-career pay that started back in 2024. <b>The lesson for any transformation you eventually run: durable quality gains come from sustained investment in people and systems, not a single push before review season.</b>',
+  c:'<b>Date:</b> 2026-08-19<br><b>Description:</b> Studied CFO Dive coverage of EY\'s 2025 PCAOB inspection results and the $1bn technology and talent programme behind the improvement<br><b>Provider:</b> CFO Dive / EY<br><b>Units:</b> 0.75, self-study, retain notes as evidence<br><b>Why chosen:</b> Builds technical understanding of audit quality drivers and how sustained investment maps to inspection outcomes<br><b>Learning &amp; application:</b> Framing for conversations with external auditors and audit committees on what actually moves audit quality'},
 
- {n:3,tag:'t-sa',tagl:'SA Business',cpd:false,
-  t:'SA July inflation prints tomorrow',
-  u:'https://www.statssa.gov.za/?cat=33',
-  m:'Statistics South Africa - Wednesday - ~4 min',
-  w:'June was 5.0%, the highest since mid-2024, and consensus expects July closer to 4.3 to 4.5%. <b>If it lands inside target the rate-cut conversation reopens immediately</b>, and the rand and every SA discount rate move with it. Ten minutes on the Stats SA release tomorrow puts you ahead of most people in your building.'},
+ {n:3,tag:'t-pe',tagl:'PE &amp; Deals',cpd:false,
+  t:'Founders: David Senra on Travis Kalanick, Atoms and starting over after Uber',
+  u:'https://www.founderspodcast.com/',
+  m:'Founders podcast, released 16 Aug - ~90 min listen',
+  w:'Kalanick\'s new company Atoms builds AI and robotics for food, mining and logistics, and he frames his own role bluntly as "problem solver in chief" chasing the hardest unsolved problems rather than the comfortable ones. <b>Senra\'s real skill is pulling the repeatable pattern out of a builder\'s history</b>, which is most of the job once you are the one deciding which founders deserve capital.'},
 
  {n:4,tag:'t-pe',tagl:'PE &amp; Deals',cpd:false,
-  t:'Invest Like The Best 486: a decade of lessons investing in software and hardware',
-  u:'https://colossus.com/series/invest-like-the-best/',
-  m:'Eric Vishria, Benchmark - ~70 min listen',
-  w:'Vishria on what the rise of AWS teaches us about the current AI cycle, plus how the criteria for winning have shifted for founders and investors alike. <b>The transferable skill is watching a good investor reason from an old analogue to a live decision</b>, which is most of the job when you eventually sit on the other side of the table.'},
+  t:'Grant Thornton\'s $5bn CBIZ buyout, backed by New Mountain Capital',
+  u:'https://ir.cbiz.com/news-releases/news-release-details/grant-thornton-advisors-acquire-cbiz-5-billion-transaction',
+  m:'CBIZ investor relations - go-shop window closes 27 Aug',
+  w:'Grant Thornton, itself PE-owned since 2024, is paying $5bn cash for CBIZ in the largest professional-services deal in 25 years, creating a $7.5bn-revenue firm and the industry\'s new fifth-largest player. <b>This is the PE-backed roll-up playbook running at full scale inside accounting and advisory</b>, worth studying closely if your own fund ever eyes professional services. The go-shop clause means a rival bid is still live until the 27th.'},
 
- {n:5,tag:'t-pe',tagl:'PE &amp; Deals',cpd:false,
-  t:'Emerging managers: what is actually getting funded in 2026',
-  u:'https://www.withintelligence.com/insights/private-equity-emerging-managers-to-watch-in-2026/',
-  m:'With Intelligence - ~10 min read',
-  w:'First-time funds are still raising, but the ones getting there are narrow specialists led by operators, not generalists with a strong network. <b>If you are serious about your own firm, the sector you pick matters more than the timing.</b> Worth reading with a pen.'},
+ {n:5,tag:'t-sa',tagl:'SA Business',cpd:false,
+  t:'Mystery around Spar chair\'s exit',
+  u:'https://fm.co.za/news-and-fox/2026-08-18-mystery-around-spar-chair-s-exit/',
+  m:'Financial Mail - Ann Crotty - ~5 min read',
+  w:'Spar\'s chairman and deputy chair quit abruptly after independent retailers revolted over years of operational failures, and the board\'s SENS announcement was, in Ann Crotty\'s words, built for "maximum murkiness." <b>A clean case study in what happens when a board tries to manage a crisis through vague statements instead of a straight answer</b>, relevant the moment you sit on a board yourself.'},
 
  {n:6,tag:'t-sa',tagl:'SA Business',cpd:false,
-  t:'JSE and the rand into the inflation print',
-  u:'https://tradingeconomics.com/south-africa/stock-market',
-  m:'Trading Economics - ~3 min scan',
-  w:'The index has been grinding higher and the rand has firmed, largely on softer US inflation rather than anything domestic. <b>Check the driver before you form a view</b>, because a strong-looking SA market propped up by global risk appetite is a different thing from a strong SA economy.'},
+  t:'Sihlobo: trade barriers threaten Sadc agriculture growth',
+  u:'https://www.businessday.co.za/opinion/2026-08-18-wandile-sihlobo-trade-barriers-threaten-sadc-agriculture-growth/',
+  m:'Business Day - Wandile Sihlobo - ~4 min read',
+  w:'Sihlobo\'s argument out of the Durban Sadc summit: regional growth depends less on new agreements and more on individual governments actually opening trade and registering modern seed technology, with an El Niño-driven drought risk building. <b>A constructive, non-alarmist read on where South Africa\'s regional economic leverage genuinely sits</b>, useful context while you are still weighing the medium-term picture here against Australia.'},
 
  {n:7,tag:'t-life',tagl:'Focus &amp; Family',cpd:false,
-  t:'Cal Newport on the optimisation paradox',
-  u:'https://www.youtube.com/@CalNewportMedia/videos',
-  m:'Deep Questions - ~45 min listen',
-  w:'The argument is that constant measuring quietly generates anxiety and crowds out the few things that actually drive progress. <b>Relevant if you are running a CPD tracker, a training log and a career plan at the same time.</b> Systems should serve the goal, not become it.'}
+  t:'Huberman Lab: the neuroscience of emotions and how to regulate them',
+  u:'https://www.hubermanlab.com/episode/neuroscience-of-emotions-and-tools-for-improving-emotion-regulation-ralph-adolphs',
+  m:'Dr Ralph Adolphs on Huberman Lab, released 17 Aug - ~2.5 hr listen',
+  w:'Adolphs breaks down how the brain actually generates fear, joy and other emotions, then gives specific, science-backed tools for regulating them rather than just labelling them. <b>Emotional regulation is as much a leadership skill as a family one</b>, useful in a tense boardroom moment and just as useful at the dinner table.'}
 ];
 
 var S = {};
@@ -191,31 +189,22 @@ function build(){
        + '\n\nPlease update my Content Profile so tomorrow reflects this.';
 }
 
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
 document.getElementById('send').onclick=function(){
   var b=this,note=document.getElementById('note'),txt=build();
   if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
-  function ok(){b.textContent='Copied';b.className='send done';
-    note.textContent='Now open Claude and paste it in.';
-    setTimeout(function(){b.textContent='Copy my feedback';b.className='send';},4000);}
-  if(navigator.clipboard&&navigator.clipboard.writeText){
-    navigator.clipboard.writeText(txt).then(ok,function(){fb(txt,ok);});
-  } else fb(txt,ok);
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow\u2019s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
 };
-
-function fb(txt,ok){
-  var ta=document.createElement('textarea');
-  ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';
-  document.body.appendChild(ta);ta.select();
-  try{document.execCommand('copy');ok();}catch(e){prompt('Copy this:',txt);}
-  document.body.removeChild(ta);
-}
-
-document.getElementById('mail').addEventListener('click',function(e){
-  e.preventDefault();
-  var txt=build();
-  if(!txt){document.getElementById('note').textContent='Tap More or Less first.';return;}
-  window.location.href='mailto:byronadr01@gmail.com?subject='+encodeURIComponent('Brief feedback')+'&body='+encodeURIComponent(txt);
-});
 
 render();
 </script>
