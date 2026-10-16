@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Friday &middot; 16 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Where the money goes, and how funds get built. J&amp;J and Runpod show two CFO capital and scaling calls, Aphias and Blackstone show how a debut fund and a continuation vehicle are put together, and Financial Mail asks what the shrinking JSE means for deal flow. <b>CPD today:</b> one item, ACCA Advanced Financial Modeler (25 units stated, exam-based), confirm it logs as verifiable. No news article is badged.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Advanced Financial Modeler states 25 units, 25+ hours, clear outcomes and an exam-based accreditation, but does not say &ldquo;verifiable&rdquo; or mention a certificate, so confirm both before paying. ACCA World Class Manager (24 one-hour modules, GBP 259) was left out because it states hours but no units. <b>Sourcing notes.</b> Items 4, 6 and 7 were only partly readable (paywalls) and are written from the visible intro; item 5 is a short brief with unconfirmed details. Cal Newport, Nick Bare and Huberman had nothing fresh, and The Dad Edge has had no new episode since 13 October (already used), so item 8 is a recent unused one. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+ {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'Johnson &amp; Johnson CFO taps internal investment for medtech growth',
+  u:'https://www.cfodive.com/news/johnson-johnson-cfo-taps-internal-investment-medtech-growth/833021/',
+  m:'CFO Dive - 14 Oct 2026 - about 3 min read',
+  w:'On the Q3 call, CFO Joseph Wolk said J&amp;J will lean on &ldquo;internal strategic investments&rdquo; to lift medtech, which grew 2.5% in the quarter. He tied double-digit growth by the end of the decade to that spend, and said 2026 guidance &ldquo;does not assume any inorganic additions&rdquo;, while staying open to value-adding deals. Group sales rose nearly 6% to $25bn, and net earnings fell about 96% on a talc litigation charge. <b>A live lesson in the build-versus-buy call that sits on every CFO desk. Note how he frames it: guidance excludes M&amp;A, so the plan stands on organic investment. When you pitch spend at Red Badger, state the return case and what you are not assuming.</b>'},
+
+ {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'Runpod&rsquo;s new CFO prioritizes scaling finance, AI infrastructure',
+  u:'https://www.cfodive.com/news/runpods-new-cfo-prioritizes-scaling-finance-ai-infrastructure/832891/',
+  m:'CFO Dive - 13 Oct 2026 - about 3 min read',
+  w:'Brian Erickson, ex-CFO of Suzy with earlier finance roles at AWS, Microsoft Azure and DigitalOcean, joins Runpod as ARR climbs from $120m in January to over $325m. His first moves: hire two FP&amp;A managers, tighten forecasting, and improve how the company commits to GPU capacity so resources are &ldquo;allocated in the correct way&rdquo;, while balancing growth against profitability. <b>This is the first-year CFO playbook in a hypergrowth business: build the FP&amp;A engine, fix forecasting, and manage your biggest committed cost. Note his path ran through finance roles at scaling tech companies. Ask which version of that exposure you can get inside a consulting firm.</b>'},
+
+ {n:3,tag:'t-cfo',tagl:'CFO Path &middot; CPD',cpd:true,
+  t:'ACCA CPD: Advanced Financial Modeler (25 units, FMI accreditation, GBP 475)',
+  u:'https://www.accaglobal.com/learning-and-events/acca-learning/advanced-financial-modeler.html',
+  m:'ACCA Learning - on demand - 25+ hours (14 hours directed study) - GBP 475 ACCA price - 25 units stated',
+  w:'Read on ACCA&rsquo;s own page today: <b>25 units stated</b>, upwards of 25 hours of learning including 14 hours of directed study, an accreditation designed by the Financial Modeling Institute and delivered by ACCA Learning, earned by passing an exam. Outcomes: build a financial model as a decision-making tool, forecast financial statements, run scenario analysis, and use the model to tell a company&rsquo;s story. The page does not say &ldquo;verifiable&rdquo; or mention a certificate, so confirm both with ACCA before paying. <b>It clears every bar: well over 20 minutes, explicit outcomes, recognised provider. It is also the most transferable skill for PE, where the model is the investment case, and an exam-based accreditation is a harder credential than a completion certificate. You already have the SumProduct modelling pack on file, so treat this as the alternative route, not an add-on.</b>',
+  c:'<b>Date:</b> to be completed on finishing the programme<br><b>Activity:</b> ACCA Learning, Advanced Financial Modeler (AFM) accreditation programme, ending in an exam.<br><b>Provider:</b> Financial Modeling Institute, delivered by ACCA Learning.<br><b>CPD units:</b> 25 as stated on ACCA&rsquo;s page. Log in 0.25 steps against actual time spent.<br><b>Verifiable:</b> Unconfirmed. The page does not say &ldquo;verifiable&rdquo; and does not mention a certificate. Confirm both with ACCA before purchase.<br><b>Why I chose it:</b> Explicit outcomes, 25+ hours, ACCA-delivered, and an exam-based accreditation. Directly builds the modelling skill behind deal underwriting.<br><b>Learning and application:</b> to be completed. Suggested: rebuild one Red Badger forecast as a scenario-driven model and present base, upside and downside cases.'},
+
+ {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Aphias Capital beats debut fund target with $1.05bn close',
+  u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/aphias-capital-beats-debut-fund-target-with-1-05bn-close.html',
+  m:'AltAssets - 12 Oct 2026 - 2 min read (opening paragraph visible, rest paywalled)',
+  w:'Aphias Capital closed its inaugural fund at more than $1bn, ahead of its target, to back a new lower mid-market buyout platform led by Rob Wolfson, formerly head of healthcare at HIG Capital. Target, investors and terms sit behind the paywall, so this is written from the opening paragraph only. <b>A first-time fund that beat its target in a market where fundraising is shrinking. The pattern to note: an operator with a senior pedigree at an established firm, a defined sector lens, and a lower mid-market focus. That is the template for your own launch thesis.</b>'},
+
+ {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Blackstone raises $1bn for private credit continuation fund',
+  u:'https://www.privateequitywire.co.uk/blackstone-raises-1bn-for-private-credit-continuation-fund/',
+  m:'Private Equity Wire - 9 Oct 2026 - 1 min read (short brief citing Bloomberg)',
+  w:'Blackstone has reportedly raised about $1bn for a vehicle holding assets from its Capital Opportunities Fund IV, a 2022 vintage that posted an 11% net IRR at 30 June. Allianz Global Investors is reported as lead buyer with StepStone. Existing investors can cash out, Blackstone keeps exposure, and some loans stay in other Blackstone funds. Details are unconfirmed, as the sources were unnamed. <b>Continuation vehicles are now moving from buyout into credit, and they are the mechanism GPs use to give LPs liquidity without a fire sale. Learn the structure: GP-led, new lead buyer sets the price, rolling LPs keep exposure. It is core knowledge for any future fund manager. Older than 48 hours, kept for the mechanics.</b>'},
+
+ {n:6,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+  t:'More JSE exits &hellip; more opportunities?',
+  u:'https://fm.co.za/investing/2026-10-14-more-jse-exits-more-opportunities/',
+  m:'Financial Mail (subscriber) - 15 Oct 2026 - Investing',
+  w:'Per the visible intro: 131 companies have left the JSE since 2020 and only 39 have joined, taking the count to 261 from 395 a decade ago. Curro, Renergen, Barloworld and Metrofile have gone, and Santam and Omnia are expected to follow. The standfirst says well-timed investors can profit, likened to &ldquo;picking up pennies in front of a steamroller&rdquo;. The full analysis is paywalled, so this is written from the intro only. <b>Shrinking listed supply plus take-privates is a deal-flow story for a future SA-focused fund. Read the full piece and note how the offer premiums are priced, then ask what a patient private buyer could do with these assets.</b>'},
+
+ {n:7,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+  t:'Where to from here for South Africa&rsquo;s banking giant?',
+  u:'https://fm.co.za/investing/2026-10-14-where-to-from-here-for-south-africa-s-banking-giant/',
+  m:'Financial Mail (subscriber) - 15 Oct 2026 - Investing',
+  w:'Per the visible intro: Capitec turns 25 and has grown in ways that seemed unthinkable in a saturated banking market, moving from a retail lender to a broader financial ecosystem, with business banking and SME lending as the next push. The teaser says its next phase may be its toughest yet, and a related headline reports headline earnings up 19% to R9.5bn for the six months to 31 August. The body is paywalled, so this is written from the intro only. <b>A case study in how a challenger takes share from incumbents, then has to find a second growth engine. The same question applies to any company you would back: what happens after the first S-curve? Read the full piece for the SME lending angle.</b>'},
+
+ {n:8,tag:'t-life',tagl:'Life &amp; Family',cpd:false,
+  t:'The Dad Edge: what happens when success stops feeling like enough, with John R. Miles',
+  u:'https://thedadedge.com/what-happens-when-success-stops-feeling-like-enough-featuring-john-r-miles/',
+  m:'The Dad Edge - 29 Sep 2026 - podcast, about 44 min',
+  w:'John R. Miles, a Naval Academy graduate and former Fortune 500 executive, describes &ldquo;the slow fade&rdquo;: becoming useful but unseen as career success grows. He suggests asking regularly whether you feel valued and whether you add value, and notes that children often mirror a checked-out parent. <b>Fits a season of big career moves. Put one standing weekly check on the calendar with your wife and kids, so the push toward CFO does not quietly cost you what it is for. Not new this week, but nothing fresher from the Dad Edge matched.</b>'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
