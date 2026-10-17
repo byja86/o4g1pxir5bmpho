@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Saturday &middot; 17 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Capacity, trust and who is actually buying. PepsiCo&rsquo;s CFO cuts guidance and goes after structural costs, a Prophix interview shows CFOs adding finance capacity without adding heads, and Private Equity Wire shows sponsors sitting out an M&amp;A recovery while the secondaries market keeps growing. At home, Financial Mail covers Africa&rsquo;s new credit rating agency and Prosus under Bloisi. <b>CPD today:</b> one item, ACCA&rsquo;s Performance management and financial modelling pack (11 units stated, GBP 199, BPP-delivered, certificate on completion), confirm it logs as verifiable. No news article is badged.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Advanced Financial Modeler states 25 units, 25+ hours, clear outcomes and an exam-based accreditation, but does not say &ldquo;verifiable&rdquo; or mention a certificate, so confirm both before paying. ACCA World Class Manager (24 one-hour modules, GBP 259) was left out because it states hours but no units. <b>Sourcing notes.</b> Items 4, 6 and 7 were only partly readable (paywalls) and are written from the visible intro; item 5 is a short brief with unconfirmed details. Cal Newport, Nick Bare and Huberman had nothing fresh, and The Dad Edge has had no new episode since 13 October (already used), so item 8 is a recent unused one. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+ {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'PepsiCo CFO touts cost discipline as the company slashes its profit guidance',
+  u:'https://www.cfodive.com/news/pepsico-cfo-touts-cost-discipline-slashes-guidance-beverage-pricing/832649/',
+  m:'CFO Dive - 9 Oct 2026 - about 4 min read',
+  w:'On the Q3 call, CFO Stephen Schmitt said PepsiCo is &ldquo;identifying structural cost reduction areas&rdquo; and will curb discretionary spend, including corporate costs, while still investing in international growth. FY2026 EPS growth guidance dropped to 2.5-3.5% from 5-7%, with North America beverage volume and a 15bp margin decline behind it. He pointed back to the 2019 Productivity Plan as the template for offsetting price pressure. <b>A clean lesson in how a CFO resets expectations: cut guidance once, name the cost levers, protect the growth bet. Note he separates structural cost out from discretionary spend. Use that split the next time you present a cost plan at Red Badger. Eight days old, kept for the capital allocation framing.</b>'},
+
+ {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'AI can help CFOs expand finance without adding headcount, Prophix CEO says',
+  u:'https://www.cfodive.com/news/ai-expand-finance-without-headcount-expansion-prophix-ceo-says/832555/',
+  m:'CFO Dive - 8 Oct 2026 - about 4 min read',
+  w:'Gartner has CFOs expecting 2% headcount growth in 2026, down from 6%. Datarails found 60% of CFOs are redeploying finance staff to higher-value work and only 3% are cutting roles. Finance teams mostly use AI for narratives and variance explanations (est. 4-8 hours saved per person weekly, a vendor estimate). Trust is the brake: 75% cite lack of auditability and only 4% would trust AI with month-end close. Heads up: the interview is with a software vendor&rsquo;s CEO, so treat the productivity numbers as his, not independent. <b>The useful part is the trust data, not the sales line. As a future CFO your edge is deciding where AI drafts and where a human signs. Write down your own rule for that at Red Badger now.</b>'},
+
+ {n:3,tag:'t-cfo',tagl:'CFO Path &middot; CPD',cpd:true,
+  t:'ACCA CPD: Performance management and financial modelling pack (11 units, GBP 199, on demand)',
+  u:'https://www.accaglobal.com/learning-and-events/acca-learning/performance-management-financial-modelling.html',
+  m:'ACCA Learning - on demand - 12-month access - 11 units stated - GBP 199 - delivered by BPP',
+  w:'Read on ACCA&rsquo;s own page today: <b>11 units stated</b>, 12-month on-demand access, GBP 199, delivered by BPP Professional Development, and &ldquo;CPD certificate is available upon successful completion of the pack&rdquo;. Outcomes: use data to inform strategy and turn vision into delivery, the balanced scorecard, and Excel financial modelling with the rules for doing it well. The page lists 10 courses against 11 units and gives no hours or separate member price, so confirm both with ACCA. It does not say &ldquo;verifiable&rdquo; either. <b>It clears the bar: far beyond 20 minutes, explicit outcomes, recognised provider with a certificate. It sits next to the SumProduct and Advanced Modeler packs you already have on file, so treat it as the cheaper, broader option, not an add-on. The balanced scorecard content is the piece a CFO uses to link strategy to numbers.</b>',
+  c:'<b>Date:</b> to be completed on finishing the pack<br><b>Activity:</b> ACCA Learning, Performance management and financial modelling pack (data-informed strategy, balanced scorecard, Excel financial modelling).<br><b>Provider:</b> ACCA Learning, delivered by BPP Professional Development.<br><b>CPD units:</b> 11 as stated on ACCA&rsquo;s page. Log in 0.25 steps against actual time spent.<br><b>Verifiable:</b> Unconfirmed. The page offers a CPD certificate on successful completion but does not use the word &ldquo;verifiable&rdquo;. Confirm with ACCA before purchase.<br><b>Why I chose it:</b> Explicit learning outcomes, large block of structured learning, ACCA-listed provider, and it builds the strategy-to-numbers and modelling skills needed for CFO and PE roles.<br><b>Learning &amp; application:</b> To be completed after the course. Aim to apply the balanced scorecard and modelling rules to a live Red Badger planning or margin review.'},
+
+ {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Sponsors sit out M&amp;A recovery in Q3 results',
+  u:'https://www.privateequitywire.co.uk/sponsors-sit-out-ma-recovery-in-q3-results/',
+  m:'Private Equity Wire - 16 Oct 2026 - about 3 min read',
+  w:'Goldman posted record $1.65bn Q3 advisory fees (+18%), yet its CEO said sponsor share of announced M&amp;A is &ldquo;below historical averages&rdquo;. BlackRock took $15.3bn into private markets but only $710m of it went to PE ($7.6bn infrastructure, $5bn private credit). EQT&rsquo;s €10.9bn inflow was mostly (€10.3bn) the Coller acquisition. The argument: sponsors hold assets marked above what buyers will pay, so exits wait, and LPs hold back until capital comes back. <b>This is the fundraising reality for any future fund of yours: LPs reward DPI (cash returned), not marks. Strategic buyers are leading this recovery, which is also where a CFO&rsquo;s deal experience counts.</b>'},
+
+ {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Alternative Views with Coller EQT&rsquo;s Bosa Adeghe: why GP-led deals now lead the secondaries market',
+  u:'https://www.privateequitywire.co.uk/alternative-views-with-coller-eqts-bosa-adeghe/',
+  m:'Private Equity Wire podcast - 13 Oct 2026 - 15 min listen',
+  w:'A Coller EQT partner walks through the secondaries market: GP-leds overtook LP-leds in H1 2026 (about $65bn vs $56bn, per Evercore), trophy-asset retention is the main driver of continuation vehicles, secondaries are increasingly a liquidity tool as semi-liquid funds face redemptions, and weaker discounted assets may create buying opportunities. EQT closed its Coller deal in August (up to $3.7bn). <b>Fifteen minutes on the single most useful fund-building concept right now. When exits stall, a continuation vehicle lets a GP keep a winner and give LPs a choice. Pair it with item 4: exits are slow, so this is how liquidity gets created.</b>'},
+
+ {n:6,tag:'t-sa',tagl:'SA Business',cpd:false,
+  t:'TIM COHEN: Something new out of Africa&rsquo;s debt',
+  u:'https://fm.co.za/opinion/2026-10-14-tim-cohen-something-new-out-of-africa-s-debt/',
+  m:'Financial Mail - 15 Oct 2026 - Premium, you are logged in',
+  w:'Africa has launched its own credit rating agency, AfCRA, in Mauritius with African Union backing. Cohen uses a school report-card analogy for how much one rating move shifts borrowing costs and investor behaviour. Mauritius&rsquo;s minister says it is &ldquo;not about asking the world to rate Africa more favourably&rdquo;, and Cohen suggests that claim gets tested the first time a finance minister gets a bad grade. I could only read the opening before the paywall, so the bond market verdict is for you to read in full. <b>Cost of capital for African issuers drives every deal and valuation on the continent. If AfCRA gains credibility, it changes the risk premium used in SA and African models, which matters for any future fund thesis here.</b>'},
+
+ {n:7,tag:'t-sa',tagl:'SA Business',cpd:false,
+  t:'THE FINANCE GHOST: Prosus is resilient, but for how long?',
+  u:'https://fm.co.za/opinion/2026-10-14-the-finance-ghost-prosus-is-resilient-but-for-how-long/',
+  m:'Financial Mail - 15 Oct 2026 - Premium, you are logged in',
+  w:'The Finance Ghost looks at Prosus on a &ldquo;war footing&rdquo; under CEO Fabricio Bloisi, who took over on 1 July 2024. He notes Bloisi&rsquo;s shareholder letters, which often land outside the reporting cycle and read like a founder pitching venture capitalists rather than a traditional institutional update. The opening sets up the tension: shareholders hoped for more. The detailed analysis sits behind the paywall, so I have not read it. <b>Prosus and Naspers are the JSE&rsquo;s largest capital allocation story. Reading how a CEO&rsquo;s communication style shapes investor trust is a practical lesson for how you will one day talk to a board and to LPs.</b>'},
+
+ {n:8,tag:'t-life',tagl:'Fatherhood',cpd:false,
+  t:'The Dad Edge: Why apologizing to your kids builds trust, not weakness, with Adam Ukman',
+  u:'https://thedadedge.com/why-apologizing-to-your-kids-builds-trust-not-weakness-featuring-adam-ukman/',
+  m:'The Dad Edge podcast - 6 Oct 2026 - about 63 min listen',
+  w:'Ukman, founder of The Dads Initiative, argues that men&rsquo;s media splits into anger and blame, and that dads need better company, not more lectures. His takeaways: confidence grows when you keep your word to yourself, curiosity builds more trust with kids than correction, owning mistakes earns respect, and a marriage needs scheduled time (he keeps a standing Thursday lunch and a Friday date afternoon). <b>A usable weekend listen. Pick one slot a week with your wife and put it in the calendar before the next work push. Not brand new (11 days old), but it was the best match; the newest episodes were repeats or on topics already covered.</b>'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
