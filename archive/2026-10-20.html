@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Tuesday &middot; 20 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> The CFO as capital allocator. A foundation CFO turns a data insight into a $75m investment pool, and the World Bank hires a banker to attract private capital. In private equity, EQT agrees a recommended A$9.3bn cash takeover of Cleanaway and a Thoma Bravo platform pays a 52% premium for Varonis. At home, tomorrow's Medium-Term Budget is the test of whether SA's revenue windfall is structural or just commodity prices. <b>CPD today:</b> one item, ACCA's Certificate in Organisational Transformation for Finance Professionals (15 units stated, GBP 230, and ACCA's page says it counts as verifiable CPD). No news article is badged.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Certificate in Organisational Transformation states 15 units and says it can be used as verifiable CPD, with a certificate and digital badge after a one-hour assessment. It is a paid course (GBP 230 ACCA price, GBP 310 public) and the page gives no hours, so log your real time. ACCA Corporate finance: budgeting and application (8 units, GBP 149.99, Learnsignal) was left out because the page does not say verifiable. <b>Sourcing notes.</b> Item 7 is paywalled after the intro and is written from the visible text only. Item 2 is from 8 October and is kept for the career-path angle. Items 1, 4, 5 and 6 were read in full. Nothing fresh from Nick Bare or Cal Newport, and the new Dad Edge episode (baldness) did not fit, so the lifestyle slot is Huberman. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+ {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'How 10 years at storied Cleveland Foundation changed its CFO, and Ohio',
+  u:'https://www.cfodive.com/news/cleveland-foundations-cfo-tackles-transformative-change/833147/',
+  m:'CFO Dive - 16 Oct 2026 - about 4 min read',
+  w:'Rosanne Potter, an ex-treasurer (Lubrizol, RTI) and pension manager (Eaton), has run finance at the Cleveland Foundation since 2016 and added chief growth officer in 2023. Endowed investments roughly doubled to $4.2bn, about 40% is managed in-house, and her review of local-company returns against the S&amp;P 500 led to a $30m Impact Cleveland pool, now about $75m. The article itself warns that its 25% one-year return is a short window to judge. <b>This is a CFO who widened her remit from reporting into capital allocation by spotting an insight in data and acting on it fast. That is the route from Finance Manager to CFO, and the same muscle a PE investment committee wants. Ask where you could own a capital decision at Red Badger, not just report on it.</b>'},
+
+ {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'World Bank picks BNP Paribas veteran for CFO',
+  u:'https://www.cfodive.com/news/world-bank-picks-bnp-paribas-vet-cfo-David-Vaillant/832534/',
+  m:'CFO Dive - 8 Oct 2026 - about 3 min read (older, kept for the career-path angle)',
+  w:'David Vaillant, who started as a Skadden lawyer, joined BNP Paribas in 2007 and ended as global head of finance, strategy and participations at BNP Paribas Asset Management, becomes World Bank CFO in early November. The role covers treasury, risk and bond issuance (nearly $82bn raised in fiscal 2026) and a mandate to attract private capital as donor budgets tighten. <b>Look at the CV: a mix of legal grounding, asset-management finance and strategy, not a straight audit-to-controller ladder. The CFO seat now rewards people who can bring in outside capital. Your PE ambition is an asset on that path, so make sure your profile shows capital-raising and deal exposure.</b>'},
+
+ {n:3,tag:'t-cfo',tagl:'CFO Path &middot; CPD',cpd:true,
+  t:'ACCA CPD: Certificate in Organisational Transformation for Finance Professionals (15 units, verifiable)',
+  u:'https://www.accaglobal.com/learning-and-events/acca-learning/certificate-in-organisational-transformation-for-finance-professionals.html',
+  m:'ACCA Learning - on demand - 10 self-paced modules plus a 1-hour assessment - 15 units stated - GBP 230 ACCA price (GBP 310 public)',
+  w:'Checked on ACCA&rsquo;s own page today: <b>15 units stated</b>, and the page says the certificate &ldquo;can be used as verifiable CPD&rdquo;. It is delivered by ACCA, comes with a certificate and digital badge after a one-hour online assessment, and the stated outcomes include evaluating business and value cases for transformation and the finance professional&rsquo;s role in leading change. The page gives no hours, so log your real time. This is a paid course, GBP 230 at the ACCA price. <b>It clears every bar: well beyond 20 minutes, explicit outcomes, ACCA-owned, and explicitly verifiable, which is what you asked for. It is also the closest fit yet to the CFO gap: business cases and change leadership are what separate a CFO from a controller, and they are what a PE operating partner does every day.</b>',
+  c:'<b>Date:</b> to be completed on finishing the course<br><b>Activity:</b> ACCA Learning, Certificate in Organisational Transformation for Finance Professionals (10 self-paced modules, one-hour online assessment).<br><b>Provider:</b> ACCA Learning. On demand, online, GBP 230 ACCA price.<br><b>CPD units:</b> 15 as stated on ACCA&rsquo;s page. Log in 0.25 steps against the actual time you spend.<br><b>Verifiable:</b> Yes. ACCA&rsquo;s page says the certificate &ldquo;can be used as verifiable CPD&rdquo;, with a certificate and digital badge on completing the course and assessment.<br><b>Why I chose it:</b> Explicit learning outcomes, ACCA-owned and stated verifiable, and it covers business cases, value cases, stakeholder management and the finance leader&rsquo;s role in change, a core CFO and PE operating skill.<br><b>Learning &amp; application:</b> To be completed after the course. Aim to apply the business-case and value-case methods to a real Red Badger investment or change proposal.'},
+
+ {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Cleanaway shares surge on AUD9.3bn EQT takeover news',
+  u:'https://www.privateequitywire.co.uk/cleanaway-shares-surge-on-aud9-3bn-eqt-takeover-news/',
+  m:'Private Equity Wire - 19 Oct 2026 - about 2 min read',
+  w:'EQT Infrastructure agreed to buy Australian waste group Cleanaway at A$3.095 cash per share, about A$9.3bn including debt. That is a 32.1% premium to the price on 12 August, the day before the approach became public. The board backs it unanimously, subject to no superior offer; EQT got exclusive due diligence in August; and dividends paid before completion (up to A$0.19) are deducted from the price. Financing and timing are not in the article. <b>This is a clean public-to-private recipe: approach, exclusivity, recommended cash offer, price adjusted for dividends. It is also an Australian deal, in a sector with steady cash flows. Note how the premium is measured against the undisturbed price, which is the number every board and bidder argues about.</b>'},
+
+ {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Thoma Bravo-backed Proofpoint to acquire Varonis in $6.3bn deal',
+  u:'https://www.privateequitywire.co.uk/thoma-bravo-backed-proofpoint-to-acquire-varonis-in-6-3bn-deal/',
+  m:'Private Equity Wire - 16 Oct 2026 - about 2 min read',
+  w:'Proofpoint, owned by Thoma Bravo since its $12.3bn take-private in 2021, will buy data-security firm Varonis for $49.75 a share in cash, an equity value of $5.71bn and a 52% premium to the 22 June price, before sale speculation began. Closing is expected in the first half of 2027. The article does not describe how it is financed. <b>A sponsor-owned platform acting as the buyer is the buy-and-build model in action. The 52% premium is measured against the undisturbed price, which shows how much the market had priced in by the time of the announcement. Ask how a platform company, not the fund, becomes the acquirer.</b>'},
+
+ {n:6,tag:'t-sa',tagl:'SA Business',cpd:false,
+  t:'Godongwana to table MTBPS with fiscal caution and revenue gains expected',
+  u:'https://www.ewn.co.za/2026/10/16/godongwana-to-table-mtbps-with-fiscal-caution-and-revenue-gains-expected',
+  m:'EWN - 16 Oct 2026 - about 3 min read',
+  w:'The Medium-Term Budget is tabled on Wednesday 21 October. PSG&rsquo;s Johann Els expects a tax overrun of R50bn or more, a deficit near 3.5% of GDP (February projected 4%) and a primary surplus near 1.9% (against 1.4%). Econometrix&rsquo;s Azar Jammine credits higher platinum and gold prices for part of the windfall and says the debate will be how the surplus is spent. Els warns Treasury is unlikely to bank the full windfall in its forward projections. <b>Tomorrow is the real test. The useful read is the split between a commodity windfall and structural improvement, because that decides debt stabilisation, bond yields and the cost of capital behind every SA investment case.</b>'},
+
+ {n:7,tag:'t-sa',tagl:'SA Business',cpd:false,
+  t:'Inside the dubious science of Shoprite&rsquo;s CEO pay scheme',
+  u:'https://fm.co.za/energy-esg/2026-10-18-inside-the-dubious-science-of-shoprite-s-ceo-pay-scheme/',
+  m:'Financial Mail - 19 Oct 2026 - Premium, you are logged in',
+  w:'Ann Crotty argues that benchmarking is the key factor swelling retail CEO pay, tracing Shoprite&rsquo;s executive super stretch incentive (ESSI) back to Woolworths&rsquo; weak performance under Ian Moir rather than to Shoprite&rsquo;s own executives. Shareholder Christo Wiese says he is happy with the scheme. I could only read the standfirst and intro before the paywall, so the detail is for you to read in full. <b>Remuneration design is a CFO and remco topic. Benchmarking against peers can ratchet pay up regardless of performance, so notice how an incentive plan is built as well as what it pays. It is also a governance lens you will use when assessing a PE-backed or listed management team.</b>'},
+
+ {n:8,tag:'t-life',tagl:'Leadership &amp; Life',cpd:false,
+  t:'Huberman Lab: What Makes Great Leaders &amp; How to Live an Extraordinary Life, with Dr. Jared Diamond',
+  u:'https://www.hubermanlab.com/episode/what-makes-great-leaders-and-how-to-live-an-extraordinary-life-jared-diamond',
+  m:'Huberman Lab - 19 Oct 2026 - about 1 hr 50 min listen',
+  w:'Pulitzer-winning author and UCLA professor Jared Diamond argues that no single personality type defines great leadership, and covers leaders and mistakes, partnerships between leaders, and the role of luck in history, with examples from politics, business, sport and religion (including Yvon Chouinard and John Wooden). He closes with advice on building a life around your interests and the habits he uses to keep mind and body active. <b>A long listen, so save it for a drive or a training session. The takeaway for a CFO-to-founder path: leadership is partly fit and partnership, so pick your early co-founders and boards as carefully as your deals.</b>'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
