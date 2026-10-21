@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Wednesday &middot; 21 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Structure is the edge. Intuit buys a tool for messy contract revenue, Apollo and Charlesbank show how deals are shaped around ownership rules, and the Big Four lobby over how their own oversight works. At home, today's Medium-Term Budget tests whether SA's revenue windfall is structural or just commodity prices. <b>CPD today:</b> one item, ACCA's Problem Solving and Decision Making course (2 units stated, GBP 30). The page does not say it is verifiable, so confirm with ACCA first. No news article is badged.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Certificate in Organisational Transformation states 15 units and says it can be used as verifiable CPD, with a certificate and digital badge after a one-hour assessment. It is a paid course (GBP 230 ACCA price, GBP 310 public) and the page gives no hours, so log your real time. ACCA Corporate finance: budgeting and application (8 units, GBP 149.99, Learnsignal) was left out because the page does not say verifiable. <b>Sourcing notes.</b> Item 7 is paywalled after the intro and is written from the visible text only. Item 2 is from 8 October and is kept for the career-path angle. Items 1, 4, 5 and 6 were read in full. Nothing fresh from Nick Bare or Cal Newport, and the new Dad Edge episode (baldness) did not fit, so the lifestyle slot is Huberman. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+ {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'Intuit deal signals bet on AI demand in revenue management',
+  u:'https://www.cfodive.com/news/intuit-deal-signals-bet-ai-demand-revenue-management/833166/',
+  m:'CFO Dive - 15 Oct 2026 - about 4 min read',
+  w:'Intuit has agreed to buy Sequence, an AI-native revenue management platform (terms not disclosed), to add contract-to-billing schedules, invoicing, collections and revenue recognition to its mid-market suite. The logic: usage-based and hybrid pricing is spreading, and messy contract terms are breaking manual billing. <b>For a finance leader at a consulting business, revenue recognition on complex contracts is where month-end pain and audit questions live. A CFO who can say how the ERP handles hybrid pricing, rather than just how the close runs, is operating a level up.</b> Treat it as a market signal, not a buying recommendation.'},
+ {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+  t:'Big Four firms call on SEC to soften PCAOB quality control standards',
+  u:'https://www.cfodive.com/news/big-four-firms-urge-sec-soften-pcaob-quality-control-standards-deloitee-kpmg-pwc-ey/833393/',
+  m:'CFO Dive - 19 Oct 2026 - about 4 min read',
+  w:'KPMG, PwC, Deloitte and EY want the SEC to approve PCAOB amendments to QC 1000 that would drop the External QC Function requirement for firms with more than 100 audits and the "design only" rule for non-public-company auditors. They argue it cuts cost without weakening investor protection; the CFA Institute and CII disagree. If approved, it takes effect 15 December. <b>CFOs sit across the table from auditors and audit committees every year. Knowing how oversight of your auditor is changing, and what to ask them about quality controls, is a CFO conversation, not an audit-team one.</b> A news piece, so no CPD badge.'},
+ {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+  t:'ACCA: Problem Solving and Decision Making (online course)',
+  u:'https://www.accaglobal.com/learning-and-events/acca-learning/problem-solving-decision-making.html',
+  m:'ACCA Learning - on demand - 2 units stated - GBP 30 ACCA / GBP 45 public',
+  w:'ACCA\'s own course, with four stated outcomes: why creative thinking matters in problem solving, the thinking styles people use when deciding, a step-by-step approach to creative problem solving, and how to test your ideas. The page states 2 units, a price and an on-demand format. <b>It does not state a duration, a certificate, or whether the CPD is verifiable, so confirm that with ACCA before logging it as verifiable.</b> It is a general management skills course rather than technical finance, so it earns its place on the units and the structured outcomes, not on depth. Decision frameworks are useful for investment committee style calls later. Today is a thin day for ACCA options: most of the stronger packs were badged in recent weeks.',
+  c:'<b>Date:</b> (date you complete it)<br><b>Description:</b> ACCA Learning online course: Problem Solving and Decision Making<br><b>Provider:</b> ACCA<br><b>Units:</b> 2.00 (as stated on the course page; adjust to time actually spent, in 0.25 steps)<br><b>Verifiable:</b> To be confirmed with ACCA. The page does not say. Log as non-verifiable unless a certificate or confirmation is issued.<br><b>Why chosen:</b> Structured ACCA course with stated outcomes; builds the decision-making discipline a CFO and an investment committee member needs.<br><b>Learning &amp; application:</b> Creative problem-solving process, thinking styles and testing ideas. Apply to the next Red Badger investment, pricing or hiring decision: write the options, test the assumptions, record the reasoning.'},
+ {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Apollo\'s 5.7bn easyJet buyout to generate 334m in advisory fees',
+  u:'https://www.privateequitywire.co.uk/apollos-5-7bn-easyjet-buyout-to-generate-334m-in-advisory-fees/',
+  m:'Private Equity Wire (citing FT) - 16 Oct 2026 - about 3 min read',
+  w:'Apollo\'s GBP 5.7bn take-private of easyJet is expected to generate about GBP 334m in fees, of which Apollo pays roughly GBP 280m, including GBP 190m for arranging the acquisition financing, and easyJet pays about GBP 54m. To meet EU majority-European-ownership rules the structure was reworked: four Apollo seats on a 10-member board, two for existing shareholders, and founder Stelios Haji-Ioannou\'s family rolling its 15% into the private company for a 45.1% to 49.9% holding. <b>This is deal mechanics in one story: financing fees are a real line in the cost of the deal, and regulation can dictate the cap table and the board. When you build your own fund, structuring around ownership rules will be part of the job.</b>'},
+ {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+  t:'Charlesbank invests in US law firm\'s back-office operations in $700m deal',
+  u:'https://www.privateequitywire.co.uk/charlesbank-invests-in-us-law-firms-back-office-operations-in-700m-deal/',
+  m:'Private Equity Wire - 20 Oct 2026 - about 3 min read',
+  w:'Charlesbank is backing the non-legal operations of Wood Smith Henning &amp; Berman (550+ lawyers, 23 states) through a new management services organisation, in a deal reported at about $700m. The law firm stays independent and keeps its clients and legal practice. Capital funds expansion and technology, including AI. US rules generally bar non-lawyers owning law practices, so the MSO is the workaround. <b>The skill here is structuring: finding a way to own the economics of a business where you cannot own the licence. The same MSO template has been used in healthcare and is now spreading to professional services. Watch where it goes next, including accounting.</b>'},
+ {n:6,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+  t:'Will Godongwana\'s tax pledge survive medium-term budget?',
+  u:'https://www.businessday.co.za/economy/2026-10-19-godongwana-faces-resilience-test-in-medium-term-budget-update/',
+  m:'Business Day - 19 Oct 2026 - about 5 min read',
+  w:'The Medium-Term Budget is due today. The Minister kept his February no-new-taxes pledge, but the Institute of Taxation asks whether it holds with slower growth, a fuel shock and two rate hikes. Bank of America sees revenue about R70bn above February assumptions, driven by gold and precious metals corporate tax. Debt is projected to stabilise at 78.9% of GDP then fall, and the IMF has cut its 2026 growth forecast to 1% from 1.4%. Watch the revenue line, any fuel relief and the promised fiscal anchor. <b>The test is whether the windfall is structural or just commodity prices. That distinction drives rates, the rand and the SA exposure you carry if you ever hold SA assets from Australia.</b>'},
+ {n:7,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+  t:'Orion secures Glencore payment, at last',
+  u:'https://fm.co.za/investing/2026-10-19-orion-secures-glencore-payment-at-last/',
+  m:'Financial Mail (Premium) - 20 Oct 2026 - short read, paywalled after the lead',
+  w:'Orion Minerals\' first tranche of its Glencore prepayment is now unconditional, funding about $40m towards restarting the Prieska mine, though the shares closed lower after an early rally. You are a subscriber, so you can read the rest; only the lead was visible to me, so the detail beyond it is not summarised here. <b>A prepayment from an offtaker is a financing structure worth knowing: the customer funds the project against future production. It is the kind of non-dilutive capital a CFO considers when equity is expensive.</b>'},
+ {n:8,tag:'t-life',tagl:'Fatherhood',cpd:false,
+  t:'How to Raise Confident Kids Who Take Life Seriously, featuring Jordan Raynor',
+  u:'https://thedadedge.com/how-to-raise-confident-kids-who-take-life-seriously-featuring-jordan-raynor/',
+  m:'The Dad Edge - 8 Oct 2026 - 59 min listen',
+  w:'Raynor covers keeping faith, work, marriage and parenting integrated instead of in separate boxes, short habits such as a brief silent prayer in the workday, putting the phone away after work so the kids get your full presence, and setting "kill criteria" so you decide in advance when to quit a goal. <b>The phone-away rule is the easy win. Kill criteria is the one to steal for work: it is the same discipline as an investment stop-loss, applied to projects.</b> Older than usual (13 days) because the newest episodes were repeats or did not fit.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
