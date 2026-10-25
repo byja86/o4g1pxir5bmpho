@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Sunday &middot; 25 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Fewer exits, bigger deals, and what that means for people building careers and funds. KPMG shows PE exit value at an 18-quarter high on a 22-quarter low in exit volume, GEM closes a $685m independent-sponsor fund at its hard cap, and two CFO changes (Forgent, Mattel) show how boards pay and replace the seat you are aiming for. At home, the MTBPS shows SA debt stabilising at 78.4% of GDP despite lower growth. <b>CPD today:</b> one item, ACCA's World Class Manager (24 units stated, GBP 259 for ACCA members; verifiable status to confirm with ACCA). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Accounting and Finance in a Digital Age states 8 units, stated learning outcomes, and says it can be used as verifiable CPD. It is a paid course (GBP 75 ACCA price, GBP 105 public), the page gives no hours and does not mention a certificate, so log your real time and confirm a certificate is issued. <b>Sourcing notes.</b> Items 5 and 6 are paywalled after the intro and are written from the visible text only. Item 7 is from 11 October and is kept because newer Dad Edge episodes were repeats or did not fit. Items 1, 3 and 4 were read in full; item 4 has an internal percentage error, flagged. Nothing fresh from Nick Bare or Cal Newport. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Forgent Power CFO leaves after a year',
+   u:'https://www.cfodive.com/news/forgent-power-cfo-leaves-one-year-ipo-comp/833872/',
+   m:'CFO Dive - 23 Oct 2026 - about 3 min read',
+   w:'Forgent (IPO in February, about $1.5bn raised at $27 a share, roughly $8.2bn valuation) has swapped CFOs. Ryan Fiedler stepped down on Wednesday and stays to 30 October; the amended filing says it was not a disagreement. Amy Ard, who joined as VP of finance in January and has prior CFO roles at AMG, Proterra and Tonal, takes over on a $550,000 base, a bonus target of up to 85% and a $500,000 equity grant. Fiscal 2026 net income rose 508% to $106m on $1.4bn revenue (up 89%), with FY27 revenue guidance of $2.4 to $2.6bn. <b>Read it as a succession lesson: the CFO who gets a company through the IPO is not always the one who runs the scale-up, and the person already inside the finance team with prior CFO experience was the obvious pick. Being that person at Red Badger, with a public-company-grade skill set, is the position to build.</b> News piece, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Mattel grants incoming CFO a cash sign-on bonus as sale and takeover pressure builds',
+   u:'https://www.cfodive.com/news/mattel-grants-incoming-cfo-cash-sign-bonus-sale-takeover-shareholder/833380/',
+   m:'CFO Dive - 19 Oct 2026 - about 4 min read',
+   w:'Peter Griffith, six years CFO at Amgen and 21 years at EY before that, became Mattel CFO on 20 October and joins the board. Package: $1.3m base, $1.4m cash sign-on, target bonus of 100% of base (capped at 200%), a $3.3m restricted stock award vesting over three years, plus about $3.5m of 2026 and 2027 RSUs. It is Mattel\'s second CFO change in just over a year, with a new CEO from 3 November, a reported Authentic Brands approach at about $20 a share (stock around $16.83) and a 4% holder, Southeastern, arguing the pay design rewards waiting for a $30 share price. <b>The takeaway: a board hiring a CFO into a possible sale is buying deal credibility, and the pay structure itself becomes a shareholder argument. The same lens applies when you sit on either side of a portfolio-company CFO hire in a future fund.</b> Older than 48 hours, kept because it is directly about the CFO seat. News piece, no CPD badge.'},
+  {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA: World Class Manager (24 units, on demand)',
+   u:'https://www.accaglobal.com/learning-and-events/drive-and-leadership/world-class-manager.html',
+   m:'ACCA Learning - 24 one-hour modules, 12 months access - 24 units - GBP 259 ACCA / GBP 299 public',
+   w:'Two series of 12 one-hour modules, delivered online with videos, workbooks and assessments. Stated outcomes: set goals aligned to strategy, run effective meetings and team briefings, understand emotional intelligence, and move from manager to leader (coaching, difficult conversations and conflict, strategic thinking). Completion earns a jointly branded CPD certificate and digital badge. <b>The gap between Finance Manager and CFO is mostly leadership range, not technical skill: coaching, hard conversations and strategic framing. This is a structured way to build and evidence that, and the certificate gives you a paper trail.</b> Paid, price stated openly. Honest caveat: it is general management, not technical finance, and the page does not use the word verifiable, so confirm with ACCA before relying on it for your verifiable quota. Previously left out for not stating units; the page now states 24. Claim only the hours you complete.',
+   c:'<b>Date:</b> (date(s) you complete the learning)<br><b>Description:</b> ACCA Learning: World Class Manager (24 one-hour online modules across two series, with assessments)<br><b>Provider:</b> ACCA<br><b>Units:</b> 24.00 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> To confirm. The page states 24 units and a CPD certificate with digital badge on completion, but does not say verifiable; check with ACCA and keep the certificate.<br><b>Why chosen:</b> Substantial (24 hours), explicit learning outcomes, ACCA-delivered with a completion certificate; targets the leadership range needed to move from Finance Manager to CFO.<br><b>Learning &amp; application:</b> Strategy-aligned goal setting, running team briefings, emotional intelligence, coaching and difficult conversations, thinking strategically as a leader. Apply to Red Badger: run a structured team briefing cadence and a coaching plan for one direct report.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Global private equity investment reaches $1.5tn as deal volumes weaken',
+   u:'https://privateequitywire.co.uk/global-private-equity-investment-reaches-1-5tn-as-deal-volumes-weaken',
+   m:'Private Equity Wire (KPMG Pulse of Private Equity) - 23 Oct 2026 - about 4 min read, free to read',
+   w:'KPMG\'s nine-month 2026 data: $1.5tn across 14,650 deals, concentrated in fewer, larger transactions. Carve-outs hit $182.2bn (on track for the second-best year after 2021). Exit value over the last 12 months is $1.4tn, an 18-quarter high, while exit volume is at a 22-quarter low, meaning big disposals are carrying the numbers. Drivers named: AI-linked power and infrastructure, and operational value creation. Headwinds: geopolitics, financing costs and inflation, with KPMG expecting selectivity into 2027. <b>Why it matters for a future fund: fewer exits means LPs wait longer for cash back, which makes first-time fundraising harder and favours managers with clear operational angles. Carve-outs, where corporates sell divisions, are the segment that suits a finance-led operator.</b> News piece, no CPD badge.'},
+  {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'GEM finalises independent sponsors fund at its $685m hard cap',
+   u:'https://altassets.net/premium/gem-finalises-independent-sponsors-fund-at-its-685m-hard-cap.html',
+   m:'AltAssets - 23 Oct 2026 - short; premium, paywalled after the summary',
+   w:'GEM Independent Sponsors Fund II closed at its $685m hard cap. Investors include foundations, healthcare organisations, insurers, university endowments and clients of GEM\'s outsourced CIO business. I could read only the headline and summary; the strategy detail sits behind the subscription. <b>Independent sponsors do deals one at a time with capital raised per deal, and a fund that backs them at this size shows institutional LPs now fund that model at scale. For you it is a realistic route to a first PE seat or a first deal before you raise a blind-pool fund, and a source of how LP money is being deployed into emerging managers.</b> Paywall stated openly. News piece, no CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'A fiscal anchor and a thumbs down by Cosatu: Godongwana\'s budget',
+   u:'https://www.businessday.co.za/economy/2026-10-22-godongwana-touts-sas-resilience-despite-lower-growth-pledges-fiscal-discipline/',
+   m:'Business Day - 22 Oct 2026 - about 5 min read, labelled premium',
+   w:'After the 21 October MTBPS: the 2026 growth forecast is cut to 1.2% (from 1.6% in February), 2027 to 1.6%, reaching 2% by 2029. The positive: gross debt is stabilising at 78.4% of GDP, below the 78.9% peak projected in February, with fiscal discipline pledged. <b>Debt stabilising is what the rating agencies and bond market watch, and it underpins any rate-cut path. Lower growth is the price. For planning in an SA-linked business, budget on conservative volumes and treat falling financing costs as the upside case.</b> Constructive, analytical framing. Paywall status unclear from the page.'},
+  {n:7,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'Trillion-dollar IPOs and the new Magnificent 10',
+   u:'https://fm.co.za/investing/2026-10-21-trillion-dollar-ipos-and-the-new-magnificent-10/',
+   m:'Financial Mail (Ninety One partner article) - 21 Oct 2026 - about 6 min read',
+   w:'Ninety One\'s Siobhan Simpson and Anton du Plooy look at how mega-listings could reshape global indices: SpaceX trades at about $2tn after its June IPO, Anthropic is targeting a similar valuation and OpenAI has confidentially filed. The framing is that the Magnificent 7 could become 10, and that outcomes depend on which companies succeed and the price paid. The article includes IPO-performance charts. <b>For your PE ambitions this is the exit-market story: mega-IPOs reopen the listing route and set the valuation yardsticks that private marks get compared with. It is also a lesson in concentration risk for any SA investor tracking global indices.</b> It is partner content, so read it as a manager\'s view. I read the intro and structure, not every chart.'},
+  {n:8,tag:'t-life',tagl:'Fitness & Life',cpd:false,
+   t:'How Food Choices Shape Memory, Cognition & Cravings, with Dr. Scott Kanoski',
+   u:'https://www.hubermanlab.com/episode/how-food-choices-shape-memory-cognition-and-cravings-scott-kanoski',
+   m:'Huberman Lab - 12 Oct 2026 - about 2 hours',
+   w:'Kanoski (USC neurobiologist) covers how diet affects memory and cognition, how GLP-1 drugs act on hunger, the gut microbiome and appetite, artificial sweeteners and satiety, and how to shift cravings. <b>Useful if you want to keep your energy and focus up through a heavy career-building stretch after turning 40.</b> Honest flags: much of the cited research is in animals, one source is a preprint, and the episode carries sponsor reads, so treat it as ideas to test, not instructions. Older than 48 hours; the newer Huberman episodes were a supplement protocol with unsourced hormone-compound advice, so I left them out. Not CPD.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
