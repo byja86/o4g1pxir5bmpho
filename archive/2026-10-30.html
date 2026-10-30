@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Friday &middot; 30 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Controls before automation, and liquidity as a product. Two CFO pieces on governing AI in finance and Microsoft pushing Copilot into the close, Triton's $9bn carve-out-to-strategic exit, and a $680m continuation vehicle that gives lenders an exit. SA looks to the 4 November local elections and Eskom's tariff path. <b>CPD today:</b> one item, ACCA Robotic Process and Intelligent Automation for Finance (15 units and 15 hours stated, GBP 150 ACCA; verifiable status to confirm with ACCA). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Robotic Process and Intelligent Automation for Finance states 15 units, 15 hours of learning and assessment, stated outcomes on automation strategy and business cases, and a certificate on completion. It is paid (GBP 150 ACCA, GBP 200 public); the page does not say verifiable, so confirm with ACCA and log your real time. Not used in earlier briefs. <b>Sourcing notes.</b> Friday. Items 4 to 7 are paywalled and written from the visible opening only. The Private Equity Wire homepage was serving June 2026 stories, so PE items come from AltAssets and PE Professional instead; the Boots sale and KKR Helix stories were dropped as undated or old. Dad Edge episode is 10 days old; the 29 Oct episode was skipped as a weak fit. ACCA event and AB Magazine CPD pages would not load today. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Trintech CFO: AI needs the right teams, controls',
+   u:'https://www.cfodive.com/news/trintech-cfo-right-ai-tools-right-teams-cybersecurity-reporting/873088/',
+   m:'CFO Dive - 28 Oct 2026 - Grace Noto - about 4 min read',
+   w:'An interview with Trintech CFO Omar Choucair on why finance teams are slow to hand work to AI agents: the controls and review steps are often not defined, enforced or owned. His practical list is short. Put controls and review in place before deploying agents, track token usage and cost from day one, check whether your team has the data skills to supervise the tools, and keep a human reviewing agent output while the data quality improves. A cited Redwood survey found 77% of leaders had hit unexpected costs or disruption from ungoverned agents, so the lesson is governance, not avoidance. <b>This is what the CFO conversation about AI sounds like: controls, cost and capability first, tools second. Write a one-page agent control framework for Red Badger finance and you have a CFO-grade artefact.</b> Short news interview, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Microsoft expands Copilot\'s reach in finance workflows',
+   u:'https://www.cfodive.com/news/microsoft-expands-copilot-reach-in-finance-workflows/873239/',
+   m:'CFO Dive - 29 Oct 2026 - Alexei Alexis - about 3 min read',
+   w:'Microsoft is adding more than 25 finance skills to Copilot: comparing balances and transactions, flagging discrepancies, drafting journal entries and testing results against plan. A finance plugin assembles close and forecast review packs and audit evidence, and a capital markets plugin helps build investment cases, comparable-company analyses and LBO models. Connectors include QuickBooks, Xero, Zoho Books, FactSet, Morningstar, LSEG and S&amp;P Global. Usage figures (8,000 users, 44,000 skill calls in a week of Insiders access) are Microsoft\'s own and unverified. <b>The routine layer of close, reconciliation and first-draft modelling is being automated, so your edge moves to judgement, review and deal thinking. Pair it with item 1: the person who designs the controls around these tools is the one who gets the seat.</b> Vendor announcement, read with that in mind. No CPD badge.'},
+  {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA: Robotic Process and Intelligent Automation for Finance (15 units, 15 hours)',
+   u:'https://www.accaglobal.com/learning-and-events/acca-learning/robotic-process-intelligent-automation-finance.html',
+   m:'ACCA Learning - online, self-paced, 12 months access - 15 units stated - GBP 150 ACCA / GBP 200 public',
+   w:'ACCA\'s own course, part of its Certificate in FinTech for finance and business leaders. The page states 15 hours of learning and assessment, 15 CPD units and a certificate on completion. Stated outcomes: understand how automation improves finance function efficiency, align automation with organisational strategy, identify automation opportunities, build a business case for investment, choose suitable tools and plan implementation to realise the benefits. <b>Items 1 and 2 are the news; this is the method. A business case for automation, with tool selection and benefits tracking, is exactly what a CFO or a PE operating partner signs off. Use the business-case module on a real Red Badger finance process.</b> Honest caveats: it is paid, the page does not say verifiable, and it is a self-paced course rather than a live session, so confirm verifiable status with ACCA before counting it and claim only the time you actually spend. It meets the 20-minute bar by a wide margin.',
+   c:'<b>Date:</b> (date you complete the learning)<br><b>Description:</b> ACCA Learning: Robotic Process and Intelligent Automation for Finance (online, self-paced)<br><b>Provider:</b> ACCA<br><b>Units:</b> Up to 15 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> To confirm. The page states 15 units and a certificate on completion but does not say verifiable; check with ACCA and keep the certificate.<br><b>Why chosen:</b> ACCA-branded, 15 hours with a stated assessment and certificate, stated outcomes on automation strategy and business cases; supports CFO-level technology and investment judgement.<br><b>Learning &amp; application:</b> Identifying automation opportunities, building the investment business case, tool selection and implementation planning. Apply by drafting a business case for automating one recurring Red Badger finance process, with costs, benefits and controls.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Deal Roundup: Triton agrees $9bn Trench exit; Trian-led group makes $3.8bn Wendy\'s take-private proposal',
+   u:'https://www.altassets.net/private-equity-news/by-region/global-by-region/deal-roundup-triton-agrees-9bn-trench-exit-trian-led-group-makes-3-8bn-wendys-take-private-proposal.html',
+   m:'AltAssets - 29 Oct 2026 - about 3 min (paywalled after the opening lines)',
+   w:'Triton Partners has agreed to sell Trench Group, a high-voltage electrical equipment maker, to GE Vernova for $9bn, which AltAssets calls one of the largest European PE exits announced this year. Triton bought Trench through a corporate carve-out in 2024. Revenue has grown past EUR 1bn with roughly $5bn of backlog. A Trian-led group has also floated a $3.8bn take-private of Wendy\'s. Only the opening is visible without a subscription, so the multiple and financing are not covered here. <b>The pattern to study: carve-out, fix and grow, then sell to a strategic that needs the capacity. A short hold, a backlog you can show a buyer and a strategic with a reason to pay are what produce a headline exit.</b> Paywalled, stated openly. No CPD badge.'},
+  {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'PGIM, LGT Capital Partners co-lead $680m Tree Line private credit secondaries CV',
+   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/pgim-lgt-capital-partners-co-lead-680m-tree-line-private-credit-secondaries-cv.html',
+   m:'AltAssets - 29 Oct 2026 - Mike Didymus - about 2 min (paywalled after the standfirst)',
+   w:'PGIM and LGT have co-led a $680m continuation vehicle for US direct lender Tree Line Capital Partners, giving liquidity to investors in two of its funds. AltAssets links it to a wider trend of managers using secondaries to return cash from ageing direct lending funds, and cites KKR\'s $460m private credit CV as another example. Only the headline and one-sentence standfirst are visible, so pricing and structure are not covered here. <b>Liquidity is now a product. A GP who can offer existing LPs a clean exit while keeping the assets stays in the game for the next raise. If you build a fund, plan the liquidity story before the LPs ask for it.</b> Paywalled, stated openly. No CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'Elections redraw South Africa\'s risk-opportunity map',
+   u:'https://fm.co.za/features/2026-10-28-elections-redraw-south-africa-s-risk-opportunity-map/',
+   m:'Financial Mail Premium - 29 Oct 2026 - Richard Calland and Dylan Stewart - intro only visible to me',
+   w:'Ahead of the 4 November local government elections, the authors argue the business risk landscape is splitting into zones of opportunity and hazard as ANC dominance weakens and municipalities perform unevenly. The standfirst says the poll will create problems and potential as a more local risk landscape emerges. I could only read the opening paragraphs. <b>For anyone allocating capital in SA, municipal quality now matters as much as national policy: where you operate decides your water, power and permitting risk. A useful lens for any SA asset you ever underwrite.</b> You are logged in, so read the full piece. Premium, stated openly. No CPD badge.'},
+  {n:7,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'ROB ROSE: Nyati\'s next task: softening Eskom\'s tariff blow',
+   u:'https://fm.co.za/opinion/2026-10-28-rob-rose-nyati-s-next-task-softening-eskom-s-tariff-blow/',
+   m:'Financial Mail Premium - 29 Oct 2026 - Rob Rose - intro only visible to me',
+   w:'A column on Eskom chair Mteto Nyati, who the standfirst says has hauled the utility back from the brink and kept the lights on, and now has to ease punishing tariff hikes. The visible opening profiles Nyati as a blunt engineer who has criticised the politicians who appointed him; the core argument is behind the paywall. <b>Eskom has moved from survival to pricing, and power cost is a direct input to every SA business case. Watch tariff paths when you model margins for any SA company.</b> Opinion piece, intro only, stated openly. No CPD badge.'},
+  {n:8,tag:'t-life',tagl:'Family & Fitness',cpd:false,
+   t:'The Danger of Raising Boys Through a Screen, with Bill Winchester',
+   u:'https://thedadedge.com/the-danger-of-raising-boys-through-a-screen-featuring-bill-winchester/',
+   m:'The Dad Edge - 20 Oct 2026 - about 1h',
+   w:'Bill Winchester, founder of Dangerously Good Men, a rite of passage for boys of about 12 to 15, talks about preparing sons rather than only protecting them. Takeaways from the page: mark the threshold into manhood deliberately, build a small circle of trusted men who can speak into your son\'s life, help him see his worth is not about likes, and start years early instead of rushing before a crisis. <b>Practical for a dad building leadership at home: pick one trusted man and ask him to be in your son\'s corner. Fits the long-game thinking you apply to career and fund building.</b> It is 10 days old; the newer 29 Oct episode (trapped emotions and physical pain) was skipped as a weak fit, and the 27 Oct one was used on 28 Oct. Reliability flag: I read the page summary and timeline, not the audio. Includes promotions for the guest\'s events.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
