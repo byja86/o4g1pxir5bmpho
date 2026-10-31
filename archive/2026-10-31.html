@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Saturday &middot; 31 October 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Structures that scale: how the rules, the cost plan and the capital stack are built. The FASB reworks equity-method judgement, Volkswagen's CFO sizes a EUR 31bn cost programme, CD&amp;R raises $20bn at double its last pace, and Thrive's $15.3bn ADT take-private is half debt. SA: Sasol's oil-price regime and the Starlink licensing dilemma. <b>CPD today:</b> one item, ACCA Machine Learning with Python for Finance Professionals (20 units and 20 hours stated, GBP 150 ACCA; verifiable status to confirm with ACCA). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Robotic Process and Intelligent Automation for Finance states 15 units, 15 hours of learning and assessment, stated outcomes on automation strategy and business cases, and a certificate on completion. It is paid (GBP 150 ACCA, GBP 200 public); the page does not say verifiable, so confirm with ACCA and log your real time. Not used in earlier briefs. <b>Sourcing notes.</b> Friday. Items 4 to 7 are paywalled and written from the visible opening only. The Private Equity Wire homepage was serving June 2026 stories, so PE items come from AltAssets and PE Professional instead; the Boots sale and KKR Helix stories were dropped as undated or old. Dad Edge episode is 10 days old; the 29 Oct episode was skipped as a weak fit. ACCA event and AB Magazine CPD pages would not load today. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'FASB proposes fix for investment accounting',
+   u:'https://www.cfodive.com/news/fasb-fix-investment-rule-accounting-advances-accounting-GAAP/873244/',
+   m:'CFO Dive - 29 Oct 2026 - about 3 min read',
+   w:'On 28 October the FASB proposed an update to Topic 323 (Equity Method and Joint Ventures). It would replace the size-based threshold with a single significant-influence test and drop the presumption that holding under 20% means no significant influence. That could pull some smaller stakes into equity-method accounting, mainly in real estate and construction, and it asks for more judgement, which one accounting professor warned could invite gaming. Comments close 11 January. <b>Minority stakes and JV accounting sit at the heart of fund structures and holdco reporting. A CFO who can read a proposed standard and say what it does to the numbers is doing the job; draft a half-page view on how it would change a stake you know.</b> US GAAP, so context rather than direct IFRS rules. Short news piece, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Volkswagen accelerates cost saving efforts; CFO urges swift restructuring',
+   u:'https://www.cfodive.com/news/volkswagen-accelerates-cost-saving-efforts-cfo-urges-swift-restructuring/873238/',
+   m:'CFO Dive - 29 Oct 2026 - about 3 min read',
+   w:'Volkswagen is targeting a comprehensive cost programme of about EUR 31bn (roughly $34bn), with about $12bn aimed at overhead and the rest at operating costs. CFO and COO Arno Antlitz said the nine-month results leave no room for delay, that savings will not arrive in a straight line, and that headcount and labour costs need a step down in 2027. <b>A real example of a CFO owning the restructuring clock: sized target, split between overhead and operations, and honest about phasing. That is the shape of any value-creation plan a PE operating team builds, so note how the split is framed.</b> Headline-length report, figures as reported. No CPD badge.'},
+  {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA: Machine Learning with Python for Finance Professionals (20 units, 20 hours)',
+   u:'https://www.accaglobal.com/learning-and-events/acca-learning/machine-learning-with-python-for-finance-professionals.html',
+   m:'ACCA Learning - online, self-paced, 12 months access - 20 units stated - GBP 150 ACCA / GBP 200 public',
+   w:'ACCA\'s own course, part of its Certificate in FinTech for finance and business leaders. The page states 20 hours of learning and assessment, 20 units and a certificate on completion, with 16 Jupyter notebooks and solutions. Stated outcomes: Python basics, loading and visualising data, automating Excel workflows, building auto-updating report templates, interrogating models and working with data scientists, and applying machine learning to real cases such as evaluating and fixing models. <b>A CFO or fund principal does not need to code daily, but must be able to challenge a model and work with the people who build one. The Excel automation and report-template modules give an immediate win on Red Badger month-end packs.</b> Honest caveats: it is paid, the page does not say verifiable, and the assessment format is not described, so confirm verifiable status with ACCA before counting it and claim only the time you actually spend. It clears the 20-minute bar easily. Not used in earlier briefs; it joins the unused FinTech pool.',
+   c:'<b>Date:</b> (date you complete the learning)<br><b>Description:</b> ACCA Learning: Machine Learning with Python for Finance Professionals (online, self-paced)<br><b>Provider:</b> ACCA<br><b>Units:</b> Up to 20 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> To confirm. The page states 20 units and a certificate on completion but does not say verifiable; check with ACCA and keep the certificate.<br><b>Why chosen:</b> ACCA-branded, 20 hours with stated outcomes and certificate; builds the data fluency needed to challenge models and automate reporting at CFO level.<br><b>Learning &amp; application:</b> Python for data analysis, Excel workflow automation, auto-updating report templates, model evaluation and error correction. Apply by automating one recurring Red Badger finance report and documenting the time saved and the controls around it.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'CD&R said to gather $20bn for Fund XIII in six months, twice predecessor\'s fundraising pace',
+   u:'https://www.altassets.net/private-equity-news/by-news-type/fund-news/funds-in-market/cdr-said-to-gather-20bn-for-fund-xiii-in-six-months-twice-predecessors-fundraising-pace.html',
+   m:'AltAssets - 30 Oct 2026 - Mike Didymus - about 2 min (paywalled after the standfirst)',
+   w:'Clayton, Dubilier &amp; Rice has reportedly gathered about $20bn for its thirteenth flagship buyout fund in roughly six months, twice the pace of its $26bn predecessor, which closed in 2023. Only the headline and standfirst are visible without a subscription, so investor mix and fund terms are not covered here. <b>Fundraising speed is a signal: LPs re-up fast with a manager whose realisations have returned cash. Fund XIII is a clean case of track record converting into the next raise, which is the loop you will need to build one day.</b> Reported, not confirmed by CD&amp;R. Paywalled, stated openly. No CPD badge.'},
+  {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Deal Roundup: Thrive strikes $15.3bn ADT take-private; Stonepeak completes BMO finance acquisition',
+   u:'https://www.altassets.net/private-equity-news/by-region/global-by-region/deal-roundup-thrive-strikes-15-3bn-adt-take-private-stonepeak-completes-bmo-finance-acquisition.html',
+   m:'AltAssets - 30 Oct 2026 - about 3 min (paywalled after the opening lines)',
+   w:'Thrive Holdings has agreed to take US home security provider ADT private in a deal valued at about $15.3bn, made up of roughly $7.6bn of equity value and $7.7bn of net debt. Stonepeak has also completed its acquisition of BMO\'s finance business. Per-share price, premium, financing and closing timetable are behind the paywall. <b>Note the split: about half the price is debt that rides with the business. A take-private of a cash-generative, recurring-revenue company is the classic leveraged structure, and the equity-to-debt mix is the first thing to read in any deal.</b> Paywalled, stated openly. No CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'Sasol\'s oil bonanza continues',
+   u:'https://fm.co.za/investing/2026-10-28-sasol-s-oil-bonanza-continues/',
+   m:'Financial Mail Premium - 29 Oct 2026 - Raymond Steyn - intro only visible to me',
+   w:'The opening argues the oil market is gradually accepting Strait of Hormuz disruption as a prolonged problem rather than a passing crisis, and that this could matter to Sasol as much as its efficiency work. After eight months of the Iran conflict, crude reacts less to daily headlines, and damaged infrastructure, shipping disruption and low inventories mean peace would not quickly normalise supply. The meta description says Sasol\'s September quarter operating update gives grounds for optimism; the detail is paywalled. <b>A case study in how a commodity price regime, not management alone, drives an SA industrial. When you value a JSE cyclical, separate what the CEO controls from what the oil price controls.</b> You are logged in, so read the full piece. Premium, stated openly. No CPD badge.'},
+  {n:7,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'EDITORIAL: Starlink\'s Ukraine problem is South Africa\'s dilemma',
+   u:'https://fm.co.za/opinion/2026-10-28-editorial-starlink-s-ukraine-problem-is-south-africa-s-dilemma/',
+   m:'Financial Mail Premium - 29 Oct 2026 - FM editorial - intro only visible to me',
+   w:'The standfirst says Starlink could transform connectivity in South Africa, but Musk\'s intervention in Ukraine shows the risks of giving him control. The visible opening cites Songezo Zibi, chair of parliament\'s public accounts committee, who said he would not personally back licensing Starlink because he sees Musk as a political actor, not a neutral provider. <b>Connectivity is an investment thesis and a policy fight at once. Practice separating the economic upside from counterparty and sovereignty risk, the same split you will make on any infrastructure asset.</b> Opinion, intro only, stated openly. No CPD badge.'},
+  {n:8,tag:'t-life',tagl:'Family & Fitness',cpd:false,
+   t:'Essentials: How Smells Influence Our Hormones, Health & Behavior, with Dr. Noam Sobel',
+   u:'https://www.hubermanlab.com/episode/essentials-how-smells-influence-our-hormones-health-and-behavior-noam-sobel',
+   m:'Huberman Lab - 29 Oct 2026 - about 35 min',
+   w:'A condensed Essentials episode with Weizmann Institute neurobiologist Noam Sobel on how smell shapes social behaviour: handshakes, friendship, emotional contagion through chemosignals, and work on digitising smell. A light, curious listen for a commute or a run, and a break from finance. <b>The useful bit is attention: much of what shapes how people respond to you is below conscious awareness, which is worth remembering in negotiations and interviews.</b> Reliability flag: the human chemosignal findings (including the aggression study) are preliminary and replication is mixed, and the episode carries sponsor reads. I read the page chapters, not the audio. No CPD badge.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
