@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Sunday &middot; 1 November 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> What it costs to scale. Amazon's CEO names AI inference cost as the real brake on adoption, HC Partners nearly doubles its fund with every LP re-upping, and General Catalyst writes a $2.1bn cheque into manufacturing. SA: Vukile's offshore playbook and PSG's quiet compounding at 26.5% ROE. <b>CPD today:</b> one item, ACCA Certificate in Data Analytics for Finance Professionals (15 units stated, GBP 230 ACCA price, page says it can be used as verifiable CPD). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Certificate in Data Analytics for Finance Professionals states 15 units, eight modules, a one-hour exam, stated outcomes and a certificate and digital badge, and says it can be used as verifiable CPD. It is paid (GBP 230 ACCA, GBP 310 public) and not used in earlier briefs. Log only the time you actually spend. <b>Sourcing notes.</b> Sunday. Items 3 to 6 are paywalled and written from the visible opening only. CFO Dive carried no new dated items beyond 30 Oct, so the CFO news item is the Amazon inference-cost story. The Lightspeed and Mubadala fund stories were skipped as already covered. The Dad Edge item is a March re-release, flagged openly. ACCA event, learning-and-events and AB Magazine pages would not load today. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Amazon CEO flags AI costs as barrier to wider adoption',
+   u:'https://www.cfodive.com/news/amazon-ceo-flags-ai-costs-barrier-wider-adoption/873381/',
+   m:'CFO Dive - 30 Oct 2026 - Alexei Alexis - about 4 min read',
+   w:'On Amazon\'s Q3 call, Andy Jassy said the cost of inference (running a model every time it answers or acts) is what could limit enterprise AI adoption, alongside a shortage of people who can operate and fine-tune the systems. Gartner puts inference at about 55% of AI-optimised infrastructure spend in 2026 (roughly $23.3bn, versus about $19bn for training). Bedrock token volume is up nearly 17x on last year, and AWS grew 39.3% to $46bn. <b>AI cost is recurring and usage-driven, not a one-off capex line. The CFO question is cost per transaction against value per transaction, with usage forecasting tied to adoption. Build that unit-economics view for any AI tool your team trials.</b> Constructive and numbers-led. Short news piece, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA Certificate in Data Analytics for Finance Professionals',
+   u:'https://www.accaglobal.com/learning-and-events/acca-learning/certificate-in-data-analytics.html',
+   m:'ACCA Learning - on demand - 15 units stated - 8 self-paced modules plus a 1-hour online exam - paid',
+   w:'ACCA\'s own course: eight interactive modules and a one-hour exam. Stated outcomes: use the four types of analytics for financial decisions and strategy, apply techniques to real datasets, turn raw data into visual insight, understand the role of AI, machine learning and Python/R/SQL, and cover data governance, security and ethics. It earns a certificate and digital badge, and the page says it can be used as verifiable CPD. Price is GBP 230 for ACCA members (GBP 310 public). <b>This is the first genuine verifiable-CPD candidate that fits the CFO and PE path: diligence and portfolio monitoring both run on analytics literacy. It passes the strict test: well over 20 minutes, stated outcomes, ACCA-delivered, certificate.</b> Paid, stated openly. Not used in earlier briefs.',
+   c:'<b>Date:</b> (date you complete the learning)<br><b>Description:</b> ACCA Learning: Certificate in Data Analytics for Finance Professionals (online, self-paced, 8 modules plus 1-hour assessment)<br><b>Provider:</b> ACCA<br><b>Units:</b> Up to 15 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> Yes, per ACCA\'s course page ("can be used as verifiable CPD"). Keep the certificate and digital badge.<br><b>Why chosen:</b> ACCA-delivered with stated learning outcomes and a certificate; builds the analytics fluency needed to interrogate management information, diligence data and portfolio KPIs at CFO and PE level.<br><b>Learning &amp; application:</b> Four types of analytics, data visualisation, Python/R/SQL and ML basics, data governance and ethics. Apply by building one analytics-led KPI pack for a Red Badger finance review and documenting the decisions it informs.'},
+  {n:3,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'HC Partners nearly doubles fund size with EUR 100m hard-cap close, following two sponsor exits',
+   u:'https://www.altassets.net/private-equity-news/by-region/europe-by-region/western-europe-europe-by-region/netherlands-western-europe-europe-by-region/hc-partners-nearly-doubles-fund-size-with-e100m-hard-cap-close-following-two-sponsor-exits.html',
+   m:'AltAssets - 29 Oct 2026 - Mike Didymus - about 2 min (paywalled after the standfirst)',
+   w:'Dutch firm HC Partners closed its third fund at a EUR 100m hard cap, above its EUR 80m target and nearly double the previous vehicle, and every existing institutional investor committed again. The headline ties the raise to two recent sponsor exits; names, strategy and terms sit behind the paywall. <b>This is the small-fund version of the loop you will need: realise capital, return it, and your LPs re-up into a bigger vehicle. A sub-EUR 100m fund with 100% LP retention is a realistic template for a first independent fund.</b> Reported from the visible opening only. Paywalled, stated openly. No CPD badge.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Deal Roundup: General Catalyst backs $2.1bn Re:Build financing',
+   u:'https://www.altassets.net/private-equity-news/by-region/global-by-region/deal-roundup-general-catalyst-backs-2-1bn-rebuild-financing.html',
+   m:'AltAssets - 28 Oct 2026 - about 3 min (paywalled after the opening lines)',
+   w:'General Catalyst and JPMorganChase\'s Strategic Investment Group led a $2.1bn financing for Re:Build, a US advanced manufacturing business. Structure, split between debt and equity, and valuation are not visible without a subscription. The same roundup carries Bain\'s $5.7bn Surgery Partners take-private with a retained stake and a Trian-led $3.8bn Wendy\'s proposal. <b>Venture-style firms are now writing large structured cheques into industrial and manufacturing assets. Watch who funds what: growth investors alongside a bank balance-sheet arm is a template that blurs the line between PE, credit and venture.</b> Paywalled, stated openly. No CPD badge.'},
+  {n:5,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'How Vukile rewrote the offshore growth playbook',
+   u:'https://fm.co.za/investing/2026-10-29-how-vukile-rewrote-the-offshore-growth-playbook/',
+   m:'Financial Mail Premium - 30 Oct 2026 - Joan Muller - intro visible only',
+   w:'FM calls Vukile one of the most compelling offshore growth stories in JSE corporate history: a modest early Spanish investment grown into a EUR 2.2bn retail platform across Spain and Portugal through Castellana Properties, while the South African core was strengthened. CEO Laurence Rapp features. The "how" is behind the paywall. <b>Most JSE offshore expansions destroyed value. The useful question for a future CFO or fund founder is what Vukile did differently on capital allocation, local partners and funding. Read it with that lens, and with Australia in mind as another offshore play.</b> Subscriber piece, intro only visible to this brief. No CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'PSG\'s quiet compounding act: why slow and steady wins the race',
+   u:'https://fm.co.za/investing/2026-10-28-psg-s-quiet-compounding-act-why-slow-and-steady-wins-the-race/',
+   m:'Financial Mail Premium - 29 Oct 2026 - Ruby Delahunt - intro visible only',
+   w:'PSG\'s recurring headline earnings rose 5% to 60.9c a share, the dividend rose 10% to 22c, wealth management grew 14% to R464m and assets under management grew 15% to R549bn. Return on equity eased to 26.5%, and the insurance arm took a hit from Cape weather events. FM\'s case: an advice-led, steady strategy that gets less attention than flashier rivals. <b>A 26.5% ROE on a fee-and-advice model is the profile of a compounder. Worth studying how a financial services group builds recurring earnings; the same logic underpins long-hold PE and permanent-capital vehicles.</b> Subscriber piece, intro only. No CPD badge.'},
+  {n:7,tag:'t-life',tagl:'Family & Fitness',cpd:false,
+   t:'The One Rule Every Dad Needs (Be Where You Are While You\'re There) featuring Jon Bernthal',
+   u:'https://thedadedge.com/the-one-rule-every-dad-needs-be-where-you-are-while-youre-there-featuring-jon-bernthal/',
+   m:'The Dad Edge - episode 1451 - re-release (originally March 2026) - about 54 min listen',
+   w:'Host Josh Culler talks fatherhood with actor Jon Bernthal: his father staying committed through hard years, owning mistakes in front of your kids, and the habit of flying overnight to coach a child\'s game. The principle is "be where you are while you\'re there". <b>For someone building toward CFO and a fund while raising a family, presence is the scarce resource. Pick one block this week where the phone is away and the work is closed.</b> Note: this is a re-release, not new this week, chosen because recent Dad Edge episodes were weaker fits. Mentions a rough youth in general terms only. No CPD badge.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
