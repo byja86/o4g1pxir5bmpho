@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Monday &middot; 2 November 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Rates, rollovers and resilience. US growth runs hot with sticky inflation, Strategy restructures its CFO and accounting seats, and Bain rolls part of its stake into a $5.7bn Surgery Partners sale. SA: the fiscal recovery question ahead of a possible rating upgrade, and Sihlobo on farmers facing El Nino. <b>CPD today:</b> one item, ACCA Certificate in Digital Finance Essentials (10 units stated, GBP 85 ACCA price, page says it can be used as verifiable CPD). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Certificate in Data Analytics for Finance Professionals states 15 units, eight modules, a one-hour exam, stated outcomes and a certificate and digital badge, and says it can be used as verifiable CPD. It is paid (GBP 230 ACCA, GBP 310 public) and not used in earlier briefs. Log only the time you actually spend. <b>Sourcing notes.</b> Sunday. Items 3 to 6 are paywalled and written from the visible opening only. CFO Dive carried no new dated items beyond 30 Oct, so the CFO news item is the Amazon inference-cost story. The Lightspeed and Mubadala fund stories were skipped as already covered. The Dad Edge item is a March re-release, flagged openly. ACCA event, learning-and-events and AB Magazine pages would not load today. <b>Feedback sheet: checked this morning, and it still holds only the two rows from 19 August, both applied long ago. Nothing new to apply.</b> Nothing here has appeared in the last seven days.
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Michael Saylor\'s Strategy CFO resigns',
+   u:'https://www.cfodive.com/news/michael-saylors-strategy-cfo-resigns-bitcoin-crypto/873385/',
+   m:'CFO Dive - 30 Oct 2026 - about 3 min read',
+   w:'Strategy CFO Andrew Kang is leaving after more than four years, citing personal reasons. The handover is staged: CEO Phong Le covers as CFO from 6 November to 31 December, Reza Virasteh (currently VP of operations) becomes CFO on 1 January, and global controller Shelley Khanna becomes chief accounting officer. It landed alongside Q3 results of $19.53bn net income on $125.4m revenue. <b>Look at the mechanics, not the headline: the CFO role is split from the principal accounting role, and the successor comes from operations, not the finance bench. A useful model for how a board protects reporting continuity through a transition, and a reminder that CFO seats are increasingly filled from operating roles.</b> Factual piece, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Economy in Q3 grew 3.4%, exceeding forecasts amid persistent inflation',
+   u:'https://www.cfodive.com/news/economy-q3-grew-exceeding-forecasts-amid-persistent-inflation-fed-savings-consumers-midterms-trump/873243/',
+   m:'CFO Dive - 29 Oct 2026 - about 4 min read',
+   w:'US GDP grew at a 3.4% annualised rate, led by 3.8% consumer spending and a 12.7% jump in non-residential investment tied to AI build-out. September PCE inflation was 3.6%, real disposable income fell 0.3%, the saving rate dropped to 3.8%, and the Fed held at 3.75% to 4% in a 10-2 vote. <b>Strong growth with sticky inflation means higher-for-longer borrowing costs. For a CFO that feeds directly into treasury, hedging and debt-refinancing decisions, and for a PE founder it feeds into leverage assumptions and exit multiples. Practise turning a macro print into two sentences for a board.</b> Analytical and constructive. No CPD badge.'},
+  {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA Certificate in Digital Finance Essentials',
+   u:'https://www.accaglobal.com/learning-and-events/acca-learning/certificate-in-digital-finance-essentials.html',
+   m:'ACCA Learning - on demand - 10 units stated - 6 self-paced modules plus a 1-hour online exam - paid',
+   w:'ACCA\'s own course: six interactive modules and a one-hour exam. Stated outcomes: explain how new technologies change the roles and skills of finance professionals, distinguish legacy and emerging technologies in different business contexts, recognise how digital applications and data help accounting and finance, and understand the ethics of data governance and AI (accountability, bias, privacy, security, IP). It earns a certificate and digital badge, and the page states it can be used as verifiable CPD. Price: GBP 85 for ACCA members (GBP 115 public). <b>The cheapest verifiable option in the ACCA library so far. It is foundational rather than deep, so treat it as the base layer for the Data Analytics and Python courses. It passes the strict test: well over 20 minutes, stated outcomes, ACCA-delivered, certificate.</b> Paid, stated openly. Not used in earlier briefs. The page does not state hours; the 10 units are as published.',
+   c:'<b>Date:</b> (date you complete the learning)<br><b>Description:</b> ACCA Learning: Certificate in Digital Finance Essentials (online, self-paced, 6 modules plus 1-hour assessment)<br><b>Provider:</b> ACCA<br><b>Units:</b> Up to 10 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> Yes, per ACCA\'s course page ("can be used as verifiable CPD"). Keep the certificate and digital badge.<br><b>Why chosen:</b> ACCA-delivered with stated learning outcomes and a certificate; builds the digital and AI-governance fluency a CFO needs to challenge technology spend and data risk.<br><b>Learning &amp; application:</b> How emerging technology changes finance roles, legacy versus emerging systems, digital applications and data in accounting, and AI and data ethics. Apply by writing a one-page view on where AI and automation sit in the Red Badger finance stack and what governance it needs.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Deal Roundup: Bain retains stake in $5.7bn Surgery Partners take-private',
+   u:'https://www.altassets.net/private-equity-news/by-region/global-by-region/deal-roundup-bain-retains-stake-in-5-7bn-surgery-partners-take-private-ember-strikes-505m-ashtead-technology-deal.html',
+   m:'AltAssets - 27 Oct 2026 - Mike Didymus - about 3 min (paywalled after the opening)',
+   w:'HealthSpan Partners, an affiliate of nonprofit hospital group Bon Secours Mercy Health, agreed to take Bain-backed Surgery Partners private in a $5.7bn deal, and the headline says Bain keeps a stake. Stake size, financing and terms are behind the paywall. <b>A sponsor rolling part of its position into a strategic buyer is a common structure: the seller banks a partial exit and keeps upside alongside the new owner. Worth knowing for your own future exits, where a rollover can bridge a valuation gap.</b> Reported from the visible opening only. Paywalled, stated openly. No CPD badge.'},
+  {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Lightspeed said to surpass $750m fundraising target for AI buyout strategy',
+   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/lightspeed-said-to-surpass-750m-fundraising-target-for-ai-buyout-strategy-targeting-up-to-1bn.html',
+   m:'AltAssets - 30 Oct 2026 - Mike Didymus - about 2 min (paywalled after the opening)',
+   w:'Lightspeed Venture Partners has reportedly raised over $750m for a new fund and co-investment vehicle aimed at established businesses that AI could transform, with a headline target of up to $1bn. It is a venture firm stepping into buyout-style deals. Reported, not confirmed by the firm, and the body is paywalled. <b>This is the "AI roll-up" thesis in fund form: buy ordinary, cash-generative businesses and use technology to lift margins. Ask the standard PE questions of it: where is the margin uplift, who owns the change, and what is the exit.</b> Reported from the visible opening only. Paywalled, stated openly. No CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'Wandile Sihlobo: Farmers hold their nerve as El Nino threatens summer crops',
+   u:'https://fm.co.za/opinion/2026-11-01-wandile-sihlobo-farmers-hold-their-nerve-as-el-nino-threatens-summer-crops/',
+   m:'Financial Mail - 2 Nov 2026 - Wandile Sihlobo - intro visible only',
+   w:'Sihlobo notes El Nino is already bringing heat to parts of the country and that hot October days signal a possibly tough season. Summer grain and oilseed planting has begun on soil moisture left over from last summer\'s rains, and he says El Nino has yet to derail planting intentions, although rainfed crops still carry real risk. The tone is measured: concerned, but confident in farmers\' resilience. <b>Agriculture drives food inflation, rural demand and the rand story. For a future CFO or investor in SA, weather-linked crop risk is a leading indicator for retailers, food producers and the inflation path.</b> Subscriber piece, intro only. No CPD badge.'},
+  {n:7,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'South Africa\'s fiscal recovery is real - but is it enough?',
+   u:'https://fm.co.za/features/2026-10-28-south-africa-s-fiscal-recovery-is-real-but-is-it-enough/',
+   m:'Financial Mail Premium - 28 Oct 2026 - intro visible only',
+   w:'FM had called the February budget a turning point for debt stabilisation. Then a US attack on Iran triggered a prolonged oil-price shock. This piece argues last week\'s medium-term budget policy statement shows the fiscal position is still stabilising, and asks whether that is enough for another sovereign rating upgrade next month. Its summary: fiscal credibility is back, but the job is far from done. Treasury says growth could top 3% if reform holds. <b>Sovereign ratings set the floor for every SA borrowing cost and valuation. Track the upgrade decision: it moves bank funding, JSE multiples and the cost of capital for any SA deal you ever back.</b> Subscriber piece, intro only. No CPD badge.'},
+  {n:8,tag:'t-life',tagl:'Family & Fitness',cpd:false,
+   t:'How We Make Our Marriage Work With Four Kids and a Business featuring Larry & Jessica Hagner',
+   u:'https://thedadedge.com/how-we-make-our-marriage-work-with-four-kids-and-a-business-featuring-larry-jessica-hagner/',
+   m:'The Dad Edge - podcast episode - length not listed on the page',
+   w:'Larry and Jessica Hagner share how they keep their marriage strong while raising four children and running a business together. Described from the episode title and listing only, as the page gives no summary. <b>Building toward CFO and a fund while raising a family is a two-person project. Pick one concrete practice from the episode, such as a weekly check-in, and agree it with your wife this week.</b> No CPD badge.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
