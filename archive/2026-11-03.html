@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Tuesday &middot; 3 November 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Building the platform. Careers that move sideways to get broader, deals whose thesis is turned into an operating model, and fund managers scaling through a specialist thesis or a majority-stake partner. SA: Nike as a capital allocation case study, and South Africa dropping out of AGOA. <b>CPD today:</b> one item, ACCA Certificate in Artificial Intelligence for Finance Professionals (15 units stated, GBP 230 ACCA price, page says it can be used as verifiable CPD). No news article is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> one badge. ACCA Certificate in Artificial Intelligence for Finance Professionals states 15 units, ten modules, a one-hour exam, stated outcomes and a certificate and digital badge, and says it can be used as verifiable CPD. It is paid (GBP 230 ACCA, GBP 310 public) and not used in earlier briefs. Log only the time you actually spend. <b>Sourcing notes.</b> Tuesday. The two CFO.com items are from teasers only (no dates or full text visible). Items 4 to 7 are paywalled and written from the visible opening only. Microsoft Copilot, Trintech, Fed hold, Q3 GDP and Strategy were skipped as already covered in the last 7 days. The Dad Edge item is a replay appearance, flagged openly. ACCA event pages and AB Magazine showed no further unit-stated items today.
+
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Inmar\'s longtime CFO on the merits of lateral career moves',
+   u:'https://www.cfo.com/news/inmars-longtime-cfo-Rich-Schmidt-on-merits-of-lateral-career-moves/873106/',
+   m:'CFO.com - Q&A - late Oct 2026 (no date shown) - short read',
+   w:'A Q&A with Inmar\'s longtime CFO on why sideways moves can matter as much as promotions. I could only see the headline and teaser, not the full interview. <b>You are a Finance Manager aiming at CFO. The path rarely runs in a straight line up the finance ladder; breadth across FP&A, treasury, M&A and operations is what boards look for. Use it to test your next two moves: does each one add a new muscle, not just a new title?</b> Teaser only, stated openly. No CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'For successful M&A, define the new operating model before the deal closes',
+   u:'https://www.cfo.com/news/for-successful-ma-define-the-new-operating-model-before-the-deal-closes/873204/',
+   m:'CFO.com - late Oct 2026 (no date shown) - short read',
+   w:'A new report argues that delivering a deal\'s thesis requires knowing what the combined company must change, and agreeing that before closing. Only the standfirst was visible to me. <b>This is the finance leader\'s job in a deal: turning the thesis into a day-one operating model with owners and numbers. It is the same discipline a PE operating partner uses in the first 100 days, so practise writing it for any deal you read about.</b> Teaser only, stated openly. No CPD badge.'},
+  {n:3,tag:'t-cfo',tagl:'CFO Path',cpd:true,
+   t:'ACCA Certificate in Artificial Intelligence for Finance Professionals',
+   u:'https://www.accaglobal.com/learning-and-events/acca-learning/certificate-in-artificial-intelligence-for-finance-professionals.html',
+   m:'ACCA Learning - on demand - 15 units stated - 10 self-paced modules plus a 1-hour online exam - paid',
+   w:'ACCA\'s own course: ten interactive modules and a one-hour assessment, ending in a certificate and digital badge. Stated outcomes: define core AI concepts (generative, non-generative, agentic, predictive models), assess the opportunities and limits of AI in finance, help develop governance frameworks that meet international standards and ethical principles, analyse AI outputs for accuracy and turn them into recommendations, and apply ACCA and IESBA ethical principles in an AI-enabled world. The page states the certificate can be used as verifiable CPD. Price: GBP 230 for ACCA members (GBP 310 public). <b>This is the one that matches where finance leadership is heading: governing AI, not just using it. It passes the strict test: well over 20 minutes, stated outcomes, ACCA-delivered, certificate. It is the natural partner to the Digital Finance Essentials and Data Analytics courses you have already seen.</b> Paid, stated openly. Hours are not stated; the 15 units are as published.',
+   c:'<b>Date:</b> (date you complete the learning)<br><b>Description:</b> ACCA Learning: Certificate in Artificial Intelligence for Finance Professionals (online, self-paced, 10 modules plus 1-hour assessment)<br><b>Provider:</b> ACCA<br><b>Units:</b> Up to 15 as stated on the course page (claim only the time actually completed, in 0.25 steps)<br><b>Verifiable:</b> Yes, per ACCA\'s course page ("can be used as verifiable CPD"). Keep the certificate and digital badge.<br><b>Why chosen:</b> ACCA-delivered with stated learning outcomes and a certificate; builds the AI governance and ethics fluency a CFO needs when challenging technology spend and model risk.<br><b>Learning &amp; application:</b> Core AI concepts, where AI does and does not fit finance tasks, governance frameworks, checking AI outputs and ethics. Apply by drafting a one-page AI use and review policy for the Red Badger finance team.'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Formation Bio raises $600m for debut fund targeting up to 15 clinical-stage drug acquisitions',
+   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/formation-bio-raises-600m-for-debut-fund-targeting-up-to-15-clinical-stage-drug-acquisitions.html',
+   m:'AltAssets - 2 Nov 2026 - Mike Didymus - about 3 min (paywalled after the opening)',
+   w:'New York-based Formation Bio has secured $600m in commitments for a first dedicated drug development fund, planning to acquire up to 15 clinical-stage medicines over five years. Structure, investors and terms are behind the paywall. <b>Note the fund design: a defined asset count and a five-year deployment window around a single thesis. A concentrated, thesis-led vehicle like this is a template for how a specialist first-time manager raises capital without a long track record.</b> Reported from the visible opening only. Paywalled, stated openly. No CPD badge.'},
+  {n:5,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Foundation Credit beats $500m target for infrastructure debt fund in wake of New Holland majority buyout',
+   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/foundation-credit-beats-500m-target-for-infrastructure-debt-fund-in-wake-of-new-holland-majority-buyout.html',
+   m:'AltAssets - 29 Oct 2026 - about 3 min (paywalled after the opening)',
+   w:'Foundation Credit closed its second infrastructure debt fund at about $540m, above its $500m target, roughly a week after New Holland Capital took a majority stake in the firm. Fee and investor detail is paywalled. <b>Two mechanics in one story: a GP sells a majority stake to a larger platform, then fundraising accelerates. For a future firm of your own, selling part of the management company to a strategic partner is a real route to scale, and the close shows the partner\'s distribution helping.</b> Reported from the visible opening only. Paywalled, stated openly. No CPD badge.'},
+  {n:6,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+   t:'Nike and Dick\'s Sporting Goods: The cost of corporate hubris',
+   u:'https://fm.co.za/investing/2026-11-02-nike-and-dick-s-sporting-goods-the-cost-of-corporate-hubris/',
+   m:'Financial Mail - 3 Nov 2026 - The Finance Ghost - paywalled after the intro (you are a subscriber)',
+   w:'The Finance Ghost looks at Nike\'s share price, down about 80% from its pandemic peak above $170 to roughly $39, and ties it to poor management decisions, with Dick\'s Sporting Goods in the headline comparison. Only the intro was visible to me; the full analysis is for subscribers. <b>A clean case study in capital allocation and strategy drift, written by a practitioner. Read it as a CFO would: which decisions did the numbers flag early, and who should have challenged them?</b> Analytical, not despairing. No CPD badge.'},
+  {n:7,tag:'t-sa',tagl:'SA &amp; Global',cpd:false,
+   t:'Bye, Agoa, you were great',
+   u:'https://fm.co.za/news-and-fox/2026-11-02-bye-agoa-you-were-great/',
+   m:'Financial Mail - 2 Nov 2026 - Giulietta Talevi - paywalled (you are a subscriber)',
+   w:'South Africa and Rwanda have been removed from the US AGOA trade programme, ending South Africa\'s 25 years of participation after months of tension between the two governments. <b>This is a trade and export-mix story: which SA sectors lose preferential access and how fast exporters can redirect. Useful for reading JSE exporter earnings and for the rand view, and a reminder to look at where a company\'s revenue sits when judging risk.</b> Factual, no commentary on outcomes yet. No CPD badge.'},
+  {n:8,tag:'t-life',tagl:'Fatherhood',cpd:false,
+   t:'Your Wife Needs You to Stop Fixing Things & Start Listening, featuring Jake Kastleman',
+   u:'https://thedadedge.com/your-wife-needs-you-to-stop-fixing-things-start-listening-featuring-jake-kastleman/',
+   m:'The Dad Edge - 1 Nov 2026 - podcast - replay of Larry Hagner on No More Desire',
+   w:'Larry Hagner explains how losing his temper with his four-year-old led to the Good Dad Project, and treats marriage and fatherhood as learnable skills. Practical tools: validate her feelings, ask whether she wants listening or collaboration, say "tell me more" instead of "why", and stay steady instead of absorbing others\' emotions. <b>The finance-manager habit is to fix. Try the one-question version this week: "Do you want me to listen or help solve it?"</b> A replay appearance, flagged openly.'}
+];
+
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
