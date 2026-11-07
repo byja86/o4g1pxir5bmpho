@@ -68,9 +68,9 @@
 <body>
 
 <div class="head">
-  <div class="date" id="dateline">Friday &middot; 6 November 2026</div>
+  <div class="date" id="dateline">Saturday &middot; 7 November 2026</div>
   <h1>Daily Brief</h1>
-  <div class="theme"><b>Theme of the day:</b> Where the value actually gets made. Stanley Black &amp; Decker turns tariff refunds into growth spend, EY rebuilds how juniors learn, and PE shows two ways to raise and return capital: a single-asset continuation vehicle and a debut fund. SA: Heineken's wine problem after Distell, and where to place AI bets. <b>CPD today:</b> none. Nothing found today states verifiable CPD units, so nothing is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+  <div class="theme"><b>Theme of the day:</b> Pricing power, funding costs and who backs new managers. Canada Goose shows tariff timing at CFO level, the jobs data keeps rate risk alive, and PE shows allocators leaning on co-invest while Sagard backs emerging managers. SA: a possible rating upgrade, and why a bigger GDP is not a richer one. <b>CPD today:</b> none. Nothing found today states verifiable CPD units, so nothing is badged. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
 </div>
 
 <div id="items"></div>
@@ -90,42 +90,41 @@
 <script>
 var ITEMS = [
   {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
-   t:'How EY is tackling next-gen talent in the AI age',
-   u:'https://www.cfodive.com/news/ey-tackling-next-gen-talent-ai-age-accounting/873796/',
-   m:'CFO Dive - 4 Nov 2026 - 4 min read',
-   w:'EY leaders say AI is absorbing routine accounting and audit work, so juniors need judgment and communication skills sooner. EY\'s answers: coaching, reverse mentorship, immersive learning, and a paid residency that stretches former winter internships into 8 to 12 month roles. <b>As a future CFO you will build a team whose entry-level work is changing. Decide now how you will train judgment, not just processing, and you will have a hiring edge.</b> Short news piece, no CPD badge.'},
+   t:'Canada Goose will revisit pricing to blunt tariffs next year, CFO says',
+   u:'https://www.cfodive.com/news/canada-goose-revisit-pricing-blunt-tariffs-year-cfo-retail/874035/',
+   m:'CFO Dive - 6 Nov 2026 - 4 min read',
+   w:'CFO Neil Bowden explains how pre-positioning stock before the mid-August duties kept the tariff hit to about 100bps of EBIT margin (roughly C$15m), against an earlier estimate of under 200bps. Prices stayed flat this year, so the company absorbed the cost, and pricing will be revisited next year. Revenue rose 5.9% but the operating loss widened. <b>This is a clean lesson in the CFO job of timing: supply-chain moves, pricing and margin guidance are one decision, and a finance lead who models them together earns credibility with the board.</b> Short news piece, no CPD badge.'},
   {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
-   t:'Stanley Black & Decker raises EPS outlook after tariff refund boost',
-   u:'https://www.cfodive.com/news/stanley-black-decker-raises-outlook-tariff-refunds-boost-margins/873805/',
-   m:'CFO Dive - 4 Nov 2026 - 3 min read',
-   w:'SBD lifted 2026 adjusted EPS guidance to $5.95 to $6.25 after a $180.7m pretax gain from tariff refunds, worth about 67 cents of EPS and 4.3 points of gross margin. It is pulling $70 to 80m of growth spend forward from 2027, and its guidance excludes possible Q4 refunds. <b>The CFO call here is how to treat a one-off windfall: reinvest it, and keep it out of the run-rate. That is the same discipline a PE buyer applies when normalising earnings in a quality-of-earnings review.</b> No CPD badge.'},
+   t:'Unemployment rate dips to 4.1% as surge in hiring shatters expectations',
+   u:'https://www.cfodive.com/news/unemployment-rate-dips-surge-hiring-shatters-expectations-fed-inflation-jobs-economy/874049/',
+   m:'CFO Dive - 6 Nov 2026 - 4 min read',
+   w:'US employers added 165,000 jobs in October, unemployment slipped to 4.1%, and wages grew 3.1%, trailing inflation. Markets now price a 77% chance of another Fed quarter-point hike in December, taking rates above the current 3.75% to 4%. <b>Strong jobs plus a hawkish Fed means funding costs stay elevated for longer. Cost of capital drives every PE entry multiple and every CFO budget, so build the rate path into your scenarios rather than treating it as background noise.</b> Short news piece, no CPD badge.'},
   {n:3,tag:'t-pe',tagl:'Private Equity',cpd:false,
-   t:'Lexington Partners leads $850m AE Industrial continuation vehicle for defence supplier Blue Raven',
-   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/lexington-partners-leads-850m-ae-industrial-continuation-vehicle-for-defence-supplier-blue-raven.html',
-   m:'AltAssets - 4 Nov 2026 - paywalled, headline only',
-   w:'AE Industrial has closed about $850m for a single-asset continuation vehicle for defence components distributor Blue Raven, roughly seven years after first investing, with Lexington Partners leading. I could only read the headline and summary. <b>Continuation vehicles are how sponsors keep a winner past a normal hold period while paying out early LPs. Learn the mechanics (price discovery, GP roll, fairness opinions) because they will be part of any fund you run.</b> No CPD badge.'},
+   t:'Virginia pension targets $750m annual private equity co-investments; PE portfolio trails benchmark by 15 points',
+   u:'https://www.altassets.net/private-equity-news/by-region/north-america-by-region/united-states-north-america-by-region/virginia-pension-targets-750m-annual-private-equity-co-investments-pe-portfolio-trails-benchmark-by-15-points.html',
+   m:'AltAssets - 6 Nov 2026 - paywalled after the lede',
+   w:'The $135.2bn Virginia Retirement System plans to lift annual PE co-investments above $750m and lean harder on continuation vehicles, while its PE book trails its benchmark. Only the headline and opening are readable without a subscription. <b>This is the LP view of your future fund: big allocators are cutting fee drag through co-invest and CVs. A fund you launch will need a credible co-invest offer from day one.</b> Flagged: described from the visible lede only.'},
   {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
-   t:'Former Phoenix Court partner Yvonne Bajela raises oversubscribed $17m debut fund for Evertrue Capital',
-   u:'https://www.altassets.net/private-equity-news/by-region/europe-by-region/western-europe-europe-by-region/united-kingdom-western-europe-europe-by-region/former-phoenix-court-partner-yvonne-bajela-raises-oversubscribed-17m-debut-fund-for-evertrue-capital.html',
-   m:'AltAssets - 4 Nov 2026 - headline only',
-   w:'A former partner at Phoenix Court has raised an oversubscribed $17m debut fund. I could not load the page, so this is from the headline only. <b>This is the small, spin-out route to a first fund: a track record from a known platform, a modest target, and demand above it. It is a realistic template for your own long-term fund-building plan.</b> No CPD badge.'},
+   t:'Sagard raises EUR 520m for emerging manager fund, triple size of predecessor',
+   u:'https://www.altassets.net/featured/sagard-raises-e520m-for-emerging-manager-fund-triple-size-of-predecessor.html',
+   m:'AltAssets - 6 Nov 2026 - paywalled after the lede',
+   w:'Sagard closed its third emerging-manager fund at EUR 520m, above a EUR 400m target and almost three times the predecessor. Further detail sits behind the paywall. <b>Established platforms are writing cheques to back first-time managers. That is a direct route to anchor capital for a future Adriaanse fund, so start learning who the seeders are and what they ask for.</b> Flagged: described from the visible lede only.'},
   {n:5,tag:'t-sa',tagl:'SA & Global',cpd:false,
-   t:'MARC HASENFUSS: Dithering on the vine after buying Distell',
-   u:'https://fm.co.za/opinion/2026-11-04-marc-hasenfuss-dithering-on-the-vine-after-buying-distell/',
-   m:'Financial Mail - 5 Nov 2026 - paywalled, intro read',
-   w:'Heineken bought Distell mainly for its cider brands, and its wine business is now under review. The columnist asks whether it can earn a decent return on wine, noting how hard that has historically been, citing the old KWV. I read only the opening. <b>A clean example of post-deal portfolio pruning: a buyer wants one asset and has to decide what to do with the rest. Expect the same question in every carve-out and PE exit you will ever look at.</b> No CPD badge.'},
+   t:'STUART THEOBALD: Why an investment-grade rating is finally within reach',
+   u:'https://fm.co.za/investing/2026-11-03-stuart-theobald-why-an-investment-grade-rating-is-finally-within-reach/',
+   m:'Financial Mail (Premium) - 3 Nov 2026 - intro read only',
+   w:'Theobald argues S&P and possibly Moody\'s reviews at month-end, with Fitch in December or before February\'s budget, could reward the fiscal discipline in the latest MTBPS. That would lift SA one rung below investment grade, with the last step possible by end of next year if the trajectory holds. Investment grade would bring government bonds into global indices and cut borrowing costs. <b>Lower sovereign risk flows into lower hurdle rates for every SA deal, and it strengthens the case for SA-linked capital raising.</b> Intro read; full piece for subscribers.'},
   {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
-   t:'The big AI investment puzzle: Where to place your bets',
-   u:'https://fm.co.za/features/2026-11-04-the-big-ai-investment-puzzle-where-to-place-your-bets/',
-   m:'Financial Mail - 5 Nov 2026 - paywalled, intro read',
-   w:'Ruby Delahunt looks at where investors should put money in AI now that backing Nvidia alone is no longer simple. She suggests some AI winners look overvalued while other AI stocks look undervalued. I read only the first two paragraphs. <b>Valuation discipline across a hot theme is the skill, which links straight to your Damodaran-style thinking. Read it for how the writer separates price from quality.</b> No CPD badge.'},
+   t:'EDITORIAL: The economy is bigger on paper but no richer in reality',
+   u:'https://fm.co.za/opinion/2026-11-04-editorial-the-economy-is-bigger-on-paper-but-no-richer-in-reality/',
+   m:'Financial Mail (Premium) - 5 Nov 2026 - intro read only',
+   w:'Rebasing makes SA\'s GDP about 5.3% larger, near R8 trillion, but core problems are unchanged. Stats SA now puts the unobserved economy (informal and illicit) at 8.7% of activity, or R551bn, and the editorial questions how narrow the tax base is. <b>A bigger denominator flatters debt-to-GDP and tax ratios without changing cash. Learn to read headline ratios critically, the same skill you will need when diligencing a target\'s adjusted numbers.</b> Intro read; full piece for subscribers.'},
   {n:7,tag:'t-life',tagl:'Life',cpd:false,
-   t:'Proximity Is the Only Parenting Philosophy You Need, featuring Rick Jordan',
-   u:'https://thedadedge.com/proximity-is-the-only-parenting-philosophy-you-need-heres-why-featuring-rick-jordan/',
-   m:'The Dad Edge - 5 Nov 2026 - about 65 min',
-   w:'Entrepreneur Rick Jordan on proximity as a parenting philosophy, staying connected to teenagers, letting kids face consequences, and growing with your spouse. He also covers a near-foreclosure and losing his father at 16. I read the show notes, not the audio. <b>A builder\'s view of presence: being close to your kids when the career gets bigger. A good one for a long weekend walk.</b>'},
+   t:'Staying Vigilant Without Making Your Family Anxious, featuring Sam Rosenberg',
+   u:'https://thedadedge.com/staying-vigilant-without-making-your-family-anxious-featuring-sam-rosenberg/',
+   m:'The Dad Edge - 3 Nov 2026 - from show notes',
+   w:'Former Marine officer Sam Rosenberg covers practical situational awareness for dads: a restaurant exit game for kids, a lost-child plan, rethinking stranger danger, and staying alert without passing anxiety to the family. <b>Calm preparation beats worry. It suits a dad who may be moving countries and wants his kids confident, not fearful.</b> Described from show notes, not listened to.'}
 ];
-
 var S = {};
 
 function render(){
