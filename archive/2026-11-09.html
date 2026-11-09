@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily Brief</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a1628">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Brief">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  :root{--navy:#0a1628;--mid:#0f1e35;--dark:#08101e;--bd:#1a2a44;--gold:#c9a84c;--goldl:#e8d08a;--tx:#e8e8e8;--tx2:#b0c4de;--mu:#4a6080}
+  html{background:var(--navy)}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--navy);color:var(--tx);
+       max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 26px) 18px calc(env(safe-area-inset-bottom) + 40px)}
+  .head{border-bottom:1px solid var(--bd);padding-bottom:18px;margin-bottom:20px}
+  .date{color:var(--mu);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px}
+  h1{color:var(--gold);font-size:25px;letter-spacing:.4px}
+  .theme{color:var(--tx2);font-size:14px;margin-top:10px;line-height:1.6}
+  .theme b{color:var(--goldl)}
+  .card{background:var(--mid);border:1px solid var(--bd);border-radius:12px;padding:17px 18px;margin-bottom:13px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
+  .tag{font-size:9.5px;padding:3px 9px;border-radius:20px;font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+  .t-cfo{background:rgba(201,168,76,.12);color:var(--gold);border:1px solid rgba(201,168,76,.3)}
+  .t-pe{background:rgba(55,138,221,.12);color:#85B7EB;border:1px solid rgba(55,138,221,.3)}
+  .t-sa{background:rgba(29,158,117,.12);color:#5DCAA5;border:1px solid rgba(29,158,117,.3)}
+  .t-life{background:rgba(226,75,74,.12);color:#F0908F;border:1px solid rgba(226,75,74,.3)}
+  .t-cpd{background:var(--gold);color:var(--dark)}
+  h2{font-size:16.5px;line-height:1.38;margin-bottom:6px;font-weight:600}
+  h2 a{color:var(--tx);text-decoration:none}
+  .num{color:var(--gold);font-weight:800;margin-right:7px}
+  .meta{font-size:11.5px;color:var(--mu);margin-bottom:9px}
+  .why{font-size:13.5px;color:var(--tx2);line-height:1.62}
+  .why b{color:var(--goldl);font-weight:600}
+  details{margin-top:12px;border-top:1px solid var(--bd);padding-top:10px}
+  summary{font-size:10.5px;color:var(--gold);cursor:pointer;text-transform:uppercase;letter-spacing:.9px;font-weight:700;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"\25B8  "}
+  details[open] summary::before{content:"\25BE  "}
+  .cpd{background:var(--dark);border:1px solid var(--bd);border-radius:8px;padding:13px;margin-top:10px;font-size:12.5px;color:var(--tx2);line-height:1.75}
+  .cpd b{color:var(--tx)}
+  .fbrow{display:flex;gap:7px;margin-top:12px;border-top:1px solid var(--bd);padding-top:11px;flex-wrap:wrap}
+  .fbtn{flex:1;min-width:104px;background:transparent;border:1px solid var(--bd);color:var(--tx2);border-radius:8px;
+        padding:10px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .fbtn.on-up{background:rgba(29,158,117,.16);border-color:#1D9E75;color:#5DCAA5;font-weight:600}
+  .fbtn.on-dn{background:rgba(226,75,74,.14);border-color:#E24B4A;color:#F0908F;font-weight:600}
+  .cbtn{background:transparent;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:10px 12px;font-size:12.5px;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .cbtn.has{color:var(--gold);border-color:rgba(201,168,76,.5)}
+  .cbox{width:100%;margin-top:9px;background:var(--dark);border:1px solid var(--bd);color:var(--tx);border-radius:8px;
+        padding:11px;font-size:13.5px;font-family:inherit;min-height:64px;display:none;-webkit-appearance:none}
+  .cbox.show{display:block}
+  .sendwrap{position:sticky;bottom:0;background:var(--navy);padding:14px 0 6px;margin-top:20px;border-top:1px solid var(--bd)}
+  .send{width:100%;background:var(--gold);color:var(--dark);border:none;border-radius:10px;padding:15px;
+        font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none}
+  .send.done{background:#1D9E75;color:#fff}
+  .note{font-size:12px;color:var(--mu);text-align:center;margin-top:9px;line-height:1.5}
+  .mail{display:block;text-align:center;margin-top:10px;font-size:12.5px;color:var(--tx2)}
+  .foot{margin-top:18px;border-top:1px solid var(--bd);padding-top:14px;font-size:12.5px;color:var(--mu);line-height:1.7}
+  .foot b{color:var(--gold)}
+  .foot a{color:var(--gold);text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <div class="date" id="dateline">Monday &middot; 9 November 2026</div>
+  <h1>Daily Brief</h1>
+  <div class="theme"><b>Theme of the day:</b> Who you hire and how you build. Novo replaces a 27-year insider CFO with an outside multi-company hire after a hypergrowth chapter. PE shows two routes: sponsors selling to sponsors (Cinven buys Theramex from Carlyle and PAI) and a regional manager reaching Fund V. SA: Shoprite weighs unwinding Wiese's deferred shares, and PSG shows what quiet compounding looks like. <b>CPD today:</b> none badged. ACCA's free Accounting for the Future conference (24 to 26 Nov, up to 21 units) is flagged but does not state verifiable units. <b>Feedback:</b> no new rows in the sheet since 19 August.</div>
+</div>
+
+<div id="items"></div>
+
+<div class="sendwrap">
+  <button class="send" id="send">Send my feedback</button>
+  <div class="note" id="note">Tap More or Less, then send. It reaches me directly.</div>
+</div>
+
+<div class="foot">
+  <b>CPD today:</b> none, on purpose. The only ACCA CPD articles I could confirm stating units ("Why critical thinking matters", "The AI productivity trap") have already been used, and the other ACCA pages (Enhancing professional scepticism, 3 units, GBP 120) do not state that they are verifiable. Under your rule, an unverifiable claim is not badged. <b>Sourcing notes.</b> Sunday. Items 1, 2 and 3 were read from the CFO Dive pages. Items 4, 6 and 5 are headline or intro level only (AltAssets and Financial Mail paywalled; item 5 is a partnered, sponsored feature, so its claims come from the fund manager). Item 7 is an older Dad Edge episode (25 Aug) from show notes, because the newer ones were already used or covered topics I judged weak. The FM piece on the oil shock was skipped as alarmist-framed.
+
+
+  <div style="margin-top:8px"><a href="archive.html">Past briefs</a></div>
+</div>
+
+<script>
+var ITEMS = [
+  {n:1,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'Novo hires new CFO as Wegovy pill hits more markets',
+   u:'https://www.cfodive.com/news/novo-hires-new-cfo-wegovy-pill-hits-new-markets-compensation/873774/',
+   m:'CFO Dive - 4 Nov 2026 - 4 min read',
+   w:'Novo Nordisk names Luigi La Corte (ex-Recordati and AstraZeneca finance roles) to succeed Karsten Munk Knudsen, who spent 27 years at Novo and as CFO since 2018 oversaw the Wegovy launch, with operating profit and cash flow almost tripling. The Wegovy pill is now in eight markets and adjusted operating profit rose 27% at constant currency in Q3. <b>The CFO who gets hired to follow a hypergrowth chapter is judged on scaling capacity and capital discipline, not just reporting. Note the pattern: an outside hire with multi-company pharma finance experience. Breadth across firms is a real route to the top seat.</b> News piece, no CPD badge.'},
+  {n:2,tag:'t-cfo',tagl:'CFO Path',cpd:false,
+   t:'ACCA Accounting for the Future 2026: Risk, resilience and reinvention (virtual, free)',
+   u:'https://www.accaglobal.com/learning-and-events/drive-and-leadership/aff-2026.html',
+   m:'ACCA - 24 to 26 Nov 2026 - 12 sessions, free, register early',
+   w:'ACCA\'s global virtual conference runs 24 to 26 November with 12 sessions, including making confident decisions in uncertain times, the autonomous finance function, agentic AI where it works and where it fails, and global economic resilience. ACCA says members can earn up to 21 units of free CPD. <b>The page does not say whether the units are verifiable and lists no formal learning outcomes, so I am not badging it as CPD yet. Check the certificate terms when you register. It is the right kind of event for you: ACCA-delivered, free, and the sessions on the autonomous finance function and decisions under uncertainty are CFO-level topics.</b> Diarise now.'},
+  {n:3,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Deal Roundup: Cinven agrees EUR 2.6bn Theramex buyout, Brookfield targets 20bn UK data centre development',
+   u:'https://www.altassets.net/private-equity-news/by-region/global-by-region/deal-roundup-cinven-agrees-e2-6bn-theramex-buyout-brookfield-targets-20bn-uk-data-centre-development.html',
+   m:'AltAssets - 4 Nov 2026 - 3 min (paywalled, headline and summary only)',
+   w:'Cinven agrees to buy Theramex, a women\'s health pharma business, from Carlyle and PAI Partners at about EUR 2.6bn (per the FT, as cited by AltAssets). Only the summary is visible without a subscription, so I cannot vouch for the deal terms. <b>This is a sponsor-to-sponsor sale, the classic secondary buyout: two funds exit together and a third underwrites the next growth leg. Watch how often mid-cap European healthcare assets change hands between funds. It tells you where exit liquidity actually sits.</b>'},
+  {n:4,tag:'t-pe',tagl:'Private Equity',cpd:false,
+   t:'Intera Partners raises Finland\'s largest buyout fund with EUR 450m hard cap close',
+   u:'https://www.altassets.net/private-equity-news/by-region/europe-by-region/western-europe-europe-by-region/intera-partners-raises-finlands-largest-buyout-fund-with-e450m-hard-cap-close.html',
+   m:'AltAssets - 5 Nov 2026 - 2 min (paywalled, opening paragraph only)',
+   w:'Intera closes its fifth buyout fund at a EUR 450m hard cap, which it calls the largest buyout fund in Finland to date. The target, LP mix and earlier fund sizes are behind the paywall, so treat the details as unconfirmed. <b>Fund V is the point. A regional manager getting to a fifth fund is a record of repeat LP trust built one vintage at a time, which is the exact path you would walk with your own firm. Study the stepping stones, not the headline size.</b>'},
+  {n:5,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'A deep dive into Shoprite\'s AGM',
+   u:'https://fm.co.za/investing/2026-11-08-a-deep-dive-into-shoprite-s-agm/',
+   m:'Financial Mail (Ann Crotty) - 9 Nov 2026 - premium, intro only read',
+   w:'Crotty praises Shoprite\'s AGM as slick and informative, against Truworths\' online AGM a day earlier, which she calls a mess. The live issue is Christo Wiese\'s deferred shares: Shoprite is looking at ways to collapse that structure, which would need hard negotiations with its founder. Executive pay, drivers and succession also featured, but the full text is paywalled. <b>Unwinding a founder\'s special-rights structure is a classic CFO and board task: valuation, dilution and negotiation in one. Read it as a live case on how governance clean-ups get priced.</b>'},
+  {n:6,tag:'t-sa',tagl:'SA & Global',cpd:false,
+   t:'PSG\'s quiet compounding act: Why slow and steady wins the race',
+   u:'https://fm.co.za/investing/2026-10-28-psg-s-quiet-compounding-act-why-slow-and-steady-wins-the-race/',
+   m:'Financial Mail (Ruby Delahunt) - 29 Oct 2026 - premium, intro only read (older, kept for substance)',
+   w:'PSG Financial Services grew recurring headline earnings 5% to 60.9c, lifted the dividend 10% to 22c, grew wealth income 14% to R464m and assets under management 15% to R549bn. ROE eased slightly to 26.5% and Cape weather hit the insurance arm. <b>A 26% ROE with steady AUM growth is the fee-earning, asset-light model PE managers are built on. Note it as a benchmark for what recurring revenue and compounding capital look like in an SA listed business.</b>'},
+  {n:7,tag:'t-life',tagl:'Fitness & Family',cpd:false,
+   t:'How Dads Can Boost Energy, Lose Fat, and Lead Strong at Home ft. Andrew Jax',
+   u:'https://thedadedge.com/how-dads-can-boost-energy-lose-fat-and-lead-strong-at-home-ft-andrew-jax/',
+   m:'The Dad Edge podcast - Aug 2025 (older) - about 46 min',
+   w:'Andrew Jax, an Australian natural bodybuilding champion and father of three, argues that a dad\'s health is a legacy issue because children copy his habits. He says busy men get results with three efficient workouts a week and a flexible eating plan, plus daily accountability, and links servant leadership and presence at home to leading at work. <b>Older episode, picked because the newer ones were already used and it matches your fitness and fatherhood pillar with an Australian angle. Practical for a 40-year-old with a full diary: three sessions a week is a plan you can actually keep.</b>'}
+];
+var S = {};
+
+function render(){
+  var h = '';
+  for (var i=0;i<ITEMS.length;i++){
+    var it = ITEMS[i];
+    h += '<div class="card">'
+      + '<div class="tags"><span class="tag '+it.tag+'">'+it.tagl+'</span>'
+      + (it.cpd ? '<span class="tag t-cpd">CPD</span>' : '') + '</div>'
+      + '<h2><span class="num">'+it.n+'</span><a href="'+it.u+'" target="_blank" rel="noopener">'+it.t+'</a></h2>'
+      + '<div class="meta">'+it.m+'</div>'
+      + '<div class="why">'+it.w+'</div>'
+      + (it.c ? '<details><summary>Ready-to-paste CPD entry</summary><div class="cpd">'+it.c+'</div></details>' : '')
+      + '<div class="fbrow" data-n="'+it.n+'">'
+      + '<button class="fbtn up">More like this</button>'
+      + '<button class="fbtn dn">Less like this</button>'
+      + '<button class="cbtn">Note</button></div>'
+      + '<textarea class="cbox" placeholder="Anything specific?"></textarea>'
+      + '</div>';
+  }
+  document.getElementById('items').innerHTML = h;
+  var rows = document.querySelectorAll('.fbrow');
+  for (var j=0;j<rows.length;j++){
+    (function(row){
+      var n = row.getAttribute('data-n');
+      var up = row.querySelector('.up'), dn = row.querySelector('.dn'), cb = row.querySelector('.cbtn');
+      var box = row.nextElementSibling;
+      function paint(){
+        var v = S[n] && S[n].v ? S[n].v : 0;
+        up.className = 'fbtn up' + (v===1?' on-up':'');
+        dn.className = 'fbtn dn' + (v===-1?' on-dn':'');
+        cb.className = 'cbtn' + (box.value.trim()?' has':'');
+      }
+      up.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===1?0:1;paint();};
+      dn.onclick=function(){S[n]=S[n]||{};S[n].v=S[n].v===-1?0:-1;paint();};
+      cb.onclick=function(){box.classList.toggle('show');if(box.classList.contains('show'))box.focus();};
+      box.oninput=paint;
+    })(rows[j]);
+  }
+}
+
+function build(){
+  var rows=document.querySelectorAll('.fbrow'),lines=[];
+  for(var i=0;i<rows.length;i++){
+    var n=rows[i].getAttribute('data-n'),box=rows[i].nextElementSibling,c=box.value.trim();
+    var v=S[n]&&S[n].v?S[n].v:0;
+    if(!v&&!c) continue;
+    var tag=v===1?'MORE like this':(v===-1?'LESS like this':'Comment');
+    var t='Item '+n;
+    for(var k=0;k<ITEMS.length;k++) if(String(ITEMS[k].n)===String(n)) t=ITEMS[k].t.replace(/&amp;/g,'&');
+    lines.push('#'+n+'  '+t+'\n   -> '+tag+(c?'\n   Note: '+c:''));
+  }
+  if(!lines.length) return null;
+  return 'Feedback on my brief ('+document.getElementById('dateline').textContent.trim()+'):\n\n'
+       + lines.join('\n\n')
+       + '\n\nPlease update my Content Profile so tomorrow reflects this.';
+}
+
+var FORM='https://docs.google.com/forms/d/e/1FAIpQLSdblrZVrEiixAI1hjU945PflKZTPF3sYRmvexH4dA2T4PWAFA/formResponse';
+var FIELD='entry.1094076360';
+
+document.getElementById('send').onclick=function(){
+  var b=this,note=document.getElementById('note'),txt=build();
+  if(!txt){note.textContent='Tap More or Less on at least one item first.';return;}
+  b.disabled=true;b.textContent='Sending...';
+  var fd=new FormData();fd.append(FIELD,txt);
+  fetch(FORM,{method:'POST',mode:'no-cors',body:fd}).then(function(){
+    b.textContent='Sent';b.className='send done';
+    note.textContent='Got it. I read these before writing tomorrow’s brief.';
+  }).catch(function(){
+    b.disabled=false;b.textContent='Copy my feedback';
+    note.textContent='That did not send. Try again in a moment.';
+  });
+};
+
+render();
+</script>
+</body>
+</html>
